@@ -1,4 +1,6 @@
 ### macOS ###
+paper/
+
 # General
 .DS_Store
 .AppleDouble

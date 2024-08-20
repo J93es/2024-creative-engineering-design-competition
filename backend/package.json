@@ -1,0 +1,47 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "http-errors": "^2.0.0",
+    "module-alias": "^2.2.3",
+    "mongoose": "^8.3.5",
+    "morgan": "^1.10.0",
+    "node": "^22.2.0",
+    "path": "^0.12.7",
+    "pug": "^3.0.2",
+    "tsconfig-paths": "^4.2.0",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.12.12",
+    "@types/pug": "^2.0.10",
+    "@types/uuidv4": "^5.0.0",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "_moduleAliases": {
+    "@core": "dist/src/core",
+    "@config": "dist/src/config",
+    "@model": "dist/src/model",
+    "@repository": "dist/src/repository",
+    "@service": "dist/src/service",
+    "@route": "dist/src/route",
+    "@utils": "dist/src/utils"
+  },
+  "scripts": {
+    "dev": "nodemon ./src/app.ts",
+    "build": "tsc",
+    "start": "node ./dist/src/app.js"
+  }
+}

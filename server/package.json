@@ -30,9 +30,18 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
+  "_moduleAliases": {
+    "@core": "dist/src/core",
+    "@config": "dist/src/config",
+    "@model": "dist/src/model",
+    "@repository": "dist/src/repository",
+    "@service": "dist/src/service",
+    "@route": "dist/src/route",
+    "@utils": "dist/src/utils"
+  },
   "scripts": {
     "dev": "nodemon ./src/app.ts",
     "build": "tsc",
-    "start": "node -r tsconfig-paths/register ./dist/src/app.js"
+    "start": "node ./dist/src/app.js"
   }
 }

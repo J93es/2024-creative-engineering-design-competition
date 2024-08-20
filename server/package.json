@@ -12,7 +12,8 @@
     "node": "^22.2.0",
     "path": "^0.12.7",
     "pug": "^3.0.2",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -24,19 +25,10 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.12.12",
     "@types/pug": "^2.0.10",
+    "@types/uuidv4": "^5.0.0",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
-  },
-  "_moduleAliases": {
-    "@core": "dist/src/core",
-    "@config": "dist/src/config",
-    "@model": "dist/src/model",
-    "@repository": "dist/src/repository",
-    "@service": "dist/src/service",
-    "@route": "dist/src/route",
-    "@utils": "dist/src/utils",
-    "@tools": "dist/src/tools"
   },
   "scripts": {
     "dev": "nodemon ./src/app.ts",

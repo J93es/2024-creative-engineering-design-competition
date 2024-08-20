@@ -19,8 +19,11 @@ import cors from "cors";
 
 import corsOptions from "@utils/cors/index";
 
+import suRailRobotRouter from "@route/su-railRobot";
+import suAccidentRouter from "@route/su-accident";
 import railRobotRouter from "@route/railRobot";
 import accidentRouter from "@route/accident";
+import alarmRouter from "@route/alarm";
 
 import { uri, PORT } from "@config/index";
 import mongoose from "mongoose";
@@ -40,6 +43,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/rail-robot", railRobotRouter);
 app.use("/accident", accidentRouter);
+app.use("/alarm", alarmRouter);
+
+app.use("/su-rail-robot", suRailRobotRouter);
+app.use("/su-accident", suAccidentRouter);
 
 // error handler
 app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {

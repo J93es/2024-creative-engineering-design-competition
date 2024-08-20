@@ -6,6 +6,6 @@ export interface AccidentRepository {
   readByStatus(status: string): Promise<AccidentType[]>;
   read(id: string): Promise<AccidentType>;
   create(data: AccidentType): Promise<AccidentType>;
-  update(data: AccidentType): Promise<AccidentType>;
+  update(data: Partial<AccidentType>): Promise<AccidentType>;
   delete(id: string): Promise<void>;
 }

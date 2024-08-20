@@ -1,9 +1,16 @@
 import { RailRobotType } from "@model/railRobot";
 
 export interface RailRobotService {
-  getAll(): Promise<RailRobotType[]>;
-  get(id: string): Promise<RailRobotType>;
-  create(data: RailRobotType): Promise<RailRobotType>;
-  update(id: string, data: RailRobotType): Promise<RailRobotType>;
-  delete(id: string): Promise<void>;
+  addRobot(robot: RailRobotType): Promise<RailRobotType>;
+  deleteRobot(id: string): Promise<void>;
+  getAllRobot(): Promise<RailRobotType[]>;
+  getRobot(id: string): Promise<RailRobotType>;
+  startPatrol(): Promise<void>;
+  moveToTargetLocation(targetLocation: number): Promise<void>;
+  startAlarm(accidentLocation: number): Promise<void>;
+  stop(id: string): Promise<RailRobotType>;
+  updateCurrentLocation(
+    id: string,
+    currentLocation: number
+  ): Promise<RailRobotType>;
 }

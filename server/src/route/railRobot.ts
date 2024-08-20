@@ -8,7 +8,7 @@ const router: Router = express.Router();
 /* GET home page. */
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await railRobotService.getAll();
+    const data = await railRobotService.getAllRobot();
     sendSuccessResponse(res, data);
     next();
   } catch (error) {
@@ -17,9 +17,9 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/each", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await railRobotService.get(req.params.id);
+    const data = await railRobotService.getRobot(req.body.id);
     sendSuccessResponse(res, data);
     next();
   } catch (error) {
@@ -30,7 +30,7 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
 
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await railRobotService.create(req.body);
+    const data = await railRobotService.addRobot(req.body);
     sendSuccessResponse(res, data);
     next();
   } catch (error) {
@@ -39,23 +39,12 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = await railRobotService.update(req.params.id, req.body);
-    sendSuccessResponse(res, data);
-    next();
-  } catch (error) {
-    sendErrorResponse(res, error);
-    next(error);
-  }
-});
-
-router.delete(
-  "/:id",
+router.put(
+  "/start-patrol",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await railRobotService.delete(req.params.id);
-      sendSuccessResponse(res, { message: "Deleted successfully" });
+      await railRobotService.startPatrol();
+      sendSuccessResponse(res, { msg: "Patrol started" });
       next();
     } catch (error) {
       sendErrorResponse(res, error);
@@ -63,5 +52,58 @@ router.delete(
     }
   }
 );
+
+router.put(
+  "/move-to-target-location",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await railRobotService.moveToTargetLocation(req.body.targetLocation);
+      sendSuccessResponse(res, { msg: "Moved to target location" });
+      next();
+    } catch (error) {
+      sendErrorResponse(res, error);
+      next(error);
+    }
+  }
+);
+
+router.put("/stop", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await railRobotService.stop(req.body.id);
+    sendSuccessResponse(res, data);
+    next();
+  } catch (error) {
+    sendErrorResponse(res, error);
+    next(error);
+  }
+});
+
+router.put(
+  "/update-current-location",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data = await railRobotService.updateCurrentLocation(
+        req.body.id,
+        req.body.currentLocation
+      );
+      sendSuccessResponse(res, data);
+      next();
+    } catch (error) {
+      sendErrorResponse(res, error);
+      next(error);
+    }
+  }
+);
+
+router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await railRobotService.deleteRobot(req.body.id);
+    sendSuccessResponse(res, { msg: "Deleted successfully" });
+    next();
+  } catch (error) {
+    sendErrorResponse(res, error);
+    next(error);
+  }
+});
 
 export default router;

@@ -65,6 +65,18 @@ export interface RailRobotType {
 }
 ```
 
+## Rate Limiter
+
+If more than 100 requests occur per minute, the rate limiter will be triggered.
+
+#### Response: 429
+
+```json
+{
+  "msg": "Too many requests, please try again later."
+}
+```
+
 ## Rail Robot Router
 
 ### GET /rail-robot
@@ -328,7 +340,6 @@ Report a new accident record.
 
 ```json
 {
-  "code": 404,
   "msg": "Error: current Accident is already exist"
 }
 ```
@@ -360,7 +371,6 @@ Ignores the current accident.
 
 ```json
 {
-  "code": 404,
   "msg": "Error: Accident is not exist"
 }
 ```

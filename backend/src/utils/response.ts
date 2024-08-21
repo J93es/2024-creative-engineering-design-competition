@@ -6,7 +6,7 @@ export function sendSuccessResponse(
   statusCode: number = 200
 ) {
   res.header("Content-Type", "application/json; charset=utf-8");
-  res.send(data).status(statusCode);
+  res.status(statusCode).send(data);
 }
 
 export function sendErrorResponse(
@@ -16,5 +16,5 @@ export function sendErrorResponse(
 ) {
   console.error(err);
   res.header("Content-Type", "application/json; charset=utf-8");
-  res.send({ code: statusCode, msg: err.toString() }).status(statusCode);
+  res.status(statusCode).send({ msg: err.toString() });
 }

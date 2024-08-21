@@ -24,6 +24,9 @@ import railRobotRouter from "@route/railRobot";
 import accidentRouter from "@route/accident";
 import alarmRouter from "@route/alarm";
 
+import { rateLimit } from "express-rate-limit";
+import { sendErrorResponse } from "@utils/response";
+
 import { uri, PORT } from "@config/index";
 import mongoose from "mongoose";
 
@@ -39,6 +42,19 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  limit: 100,
+  standardHeaders: "draft-7",
+  // legacyHeaders: false,
+  handler: (req, res) => {
+    sendErrorResponse(res, "Too many requests, please try again later.", 429);
+  },
+});
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter);
 
 app.use("/rail-robot", railRobotRouter);
 app.use("/accident", accidentRouter);

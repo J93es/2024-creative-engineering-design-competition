@@ -5,6 +5,7 @@ export const enum Command {
   ALARMING = "1",
   CHARGE = "3",
   MOVE_TO_TARGET_LOCATION = "4",
+  STOP = "5",
 }
 
 export interface RailRobotType {
@@ -13,7 +14,8 @@ export interface RailRobotType {
     | Command.PATROL
     | Command.ALARMING
     | Command.CHARGE
-    | Command.MOVE_TO_TARGET_LOCATION;
+    | Command.MOVE_TO_TARGET_LOCATION
+    | Command.STOP;
   currentLocation: number;
   targetLocation?: number;
   patrolStartLocation?: number;
@@ -26,7 +28,8 @@ export default class RailRobot implements RailRobotType {
     | Command.PATROL
     | Command.ALARMING
     | Command.CHARGE
-    | Command.MOVE_TO_TARGET_LOCATION;
+    | Command.MOVE_TO_TARGET_LOCATION
+    | Command.STOP;
   currentLocation: number;
   targetLocation?: number;
   patrolStartLocation?: number;

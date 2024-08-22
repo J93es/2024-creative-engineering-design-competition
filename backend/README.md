@@ -31,6 +31,7 @@ export const enum Command {
   ALARMING = "1",
   CHARGE = "3",
   MOVE_TO_TARGET_LOCATION = "4",
+  STOP = "5",
 }
 ```
 
@@ -41,7 +42,7 @@ export const enum Command {
 ```typescript
 export interface AccidentType {
   id: string; // Auto-generated on POST
-  code: Code.CAR_CRASH | Code.FIRE | Code.FLOOD; // Required
+  code: Code.CAR_CRASH | Code.FIRE | Code.FLOOD; // Default: Code.CAR_CRASH
   location: number; // Required
   discoverorRobotId: string; // Required
   status: Status.DETECTED | Status.IGNORED | Status.ALARMING | Status.END; // Default: Status.DETECTED
@@ -57,7 +58,8 @@ export interface RailRobotType {
     | Command.PATROL
     | Command.ALARMING
     | Command.CHARGE
-    | Command.MOVE_TO_TARGET_LOCATION; // Default: Command.PATROL
+    | Command.MOVE_TO_TARGET_LOCATION
+    | Command.STOP; // Default: Command.PATROL
   currentLocation: number; // Required
   targetLocation?: number;
   patrolStartLocation?: number;
@@ -344,6 +346,11 @@ Report a new accident record.
 }
 ```
 
+#### Effect
+
+- The accident is posted.
+- The rail robot that detected the accident stops.
+
 ### PUT /accident/ignore
 
 Ignores the current accident.
@@ -422,3 +429,23 @@ Stops the alarm.
 
 - rail-robot patroling is starting
 - accident code is updated
+
+## Reset Router
+
+### DELETE /reset
+
+Delete all information in the database and create two pieces of rail robot information.
+
+#### Request
+
+```json
+{}
+```
+
+#### Response
+
+```json
+{
+  "msg": "Deleted successfully"
+}
+```

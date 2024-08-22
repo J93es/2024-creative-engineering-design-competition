@@ -22,4 +22,8 @@ export class SuRailRobotServ implements SuRailRobotService {
   async delete(id: string): Promise<void> {
     return await railRobotRepository.delete(id);
   }
+
+  async reset(): Promise<void> {
+    return await railRobotRepository.deleteAll();
+  }
 }

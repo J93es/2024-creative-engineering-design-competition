@@ -13,6 +13,7 @@ export const railRobotSchema = new Schema<RailRobotType>({
       Command.ALARMING,
       Command.CHARGE,
       Command.MOVE_TO_TARGET_LOCATION,
+      Command.STOP,
     ],
     default: Command.PATROL,
   },

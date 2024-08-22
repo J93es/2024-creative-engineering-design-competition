@@ -6,4 +6,5 @@ export interface SuAccidentService {
   create(data: AccidentType): Promise<AccidentType>;
   update(id: string, data: AccidentType): Promise<AccidentType>;
   delete(id: string): Promise<void>;
+  reset(): Promise<void>;
 }

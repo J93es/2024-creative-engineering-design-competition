@@ -8,4 +8,5 @@ export interface AccidentRepository {
   create(data: AccidentType): Promise<AccidentType>;
   update(data: Partial<AccidentType>): Promise<AccidentType>;
   delete(id: string): Promise<void>;
+  deleteAll(): Promise<void>;
 }

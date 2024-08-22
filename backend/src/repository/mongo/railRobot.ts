@@ -43,4 +43,8 @@ export class RailRobotMongoRepo implements RailRobotRepository {
       throw new Error("RailRobot not found");
     }
   }
+
+  async deleteAll(): Promise<void> {
+    await RailRobotSchema.deleteMany({});
+  }
 }

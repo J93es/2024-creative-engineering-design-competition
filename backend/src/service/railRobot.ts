@@ -171,7 +171,7 @@ export class RailRobotServ implements RailRobotService {
   async stop(id: string): Promise<RailRobotType> {
     return await railRobotRepository.update({
       id: id,
-      command: Command.CHARGE,
+      command: Command.STOP,
     });
   }
 

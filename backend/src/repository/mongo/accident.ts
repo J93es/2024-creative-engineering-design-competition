@@ -53,4 +53,8 @@ export class AccidentMongoRepo implements AccidentRepository {
       throw new Error("Accident not found");
     }
   }
+
+  async deleteAll(): Promise<void> {
+    await AccidentSchema.deleteMany({});
+  }
 }

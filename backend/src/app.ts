@@ -23,6 +23,7 @@ import suAccidentRouter from "@route/su-accident";
 import railRobotRouter from "@route/railRobot";
 import accidentRouter from "@route/accident";
 import alarmRouter from "@route/alarm";
+import resetRouter from "@route/reset";
 
 import { rateLimit } from "express-rate-limit";
 import { sendErrorResponse } from "@utils/response";
@@ -62,6 +63,8 @@ app.use("/alarm", alarmRouter);
 
 app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
+
+app.use("/reset", resetRouter);
 
 // error handler
 app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {

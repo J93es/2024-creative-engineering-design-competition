@@ -31,4 +31,8 @@ export class SuAccidentServ implements SuAccidentService {
 
     return detectedAccident.length > 0 || alarmingAccident.length > 0;
   }
+
+  async reset(): Promise<void> {
+    return await accidentRepository.deleteAll();
+  }
 }

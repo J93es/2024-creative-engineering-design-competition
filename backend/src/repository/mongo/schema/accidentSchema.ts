@@ -6,7 +6,11 @@ const { Schema } = mongoose;
 export const accidentSchema = new Schema<AccidentType>({
   id: { type: String, unique: true, required: true, readonly: true },
 
-  code: { type: String, enum: [Code.CAR_CRASH, Code.FIRE, Code.FLOOD] },
+  code: {
+    type: String,
+    enum: [Code.CAR_CRASH, Code.FIRE, Code.FLOOD],
+    default: Code.CAR_CRASH,
+  },
   location: { type: Number, required: true },
   discoverorRobotId: { type: String, required: true },
   status: {

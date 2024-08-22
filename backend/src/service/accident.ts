@@ -2,6 +2,8 @@ import { AccidentService } from "@core/service/accident";
 import { AccidentType, Status } from "@model/accident";
 import { accidentRepository } from "@repository/index";
 
+import { railRobotService } from "@service/index";
+
 export class AccidentServ implements AccidentService {
   async isExist(): Promise<boolean> {
     const [detectedAccident, alarmingAccident] = await Promise.all([
@@ -25,7 +27,20 @@ export class AccidentServ implements AccidentService {
     if (await this.isExist()) {
       throw new Error("current Accident is already exist");
     }
-    return await accidentRepository.create(data);
+
+    if (!data.location) {
+      throw new Error("location is required");
+    }
+
+    if (!data.discoverorRobotId) {
+      throw new Error("discoverorRobotId is required");
+    }
+
+    const [accident, railRobot] = await Promise.all([
+      accidentRepository.create(data),
+      railRobotService.stop(data.discoverorRobotId),
+    ]);
+    return accident;
   }
 
   async ignore(): Promise<AccidentType> {

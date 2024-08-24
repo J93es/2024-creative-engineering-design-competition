@@ -34,6 +34,7 @@
       "@core/*": ["core/*"],
       "@config/*": ["config/*"],
       "@model/*": ["model/*"],
+      "@module/*": ["module/*"],
       "@repository/*": ["repository/*"],
       "@service/*": ["service/*"],
       "@route/*": ["route/*"],

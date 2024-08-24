@@ -15,6 +15,7 @@ import express, {
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
+import { WebSocketServer, WebSocket } from "ws";
 
 import corsOptions from "@utils/cors/index";
 
@@ -23,10 +24,12 @@ import suAccidentRouter from "@route/su-accident";
 import railRobotRouter from "@route/railRobot";
 import accidentRouter from "@route/accident";
 import alarmRouter from "@route/alarm";
-import resetRouter from "@route/reset";
+import adminRouter from "@route/admin";
+
+import { wssServer } from "@utils/live-connection/index";
 
 import { rateLimit } from "express-rate-limit";
-import { sendErrorResponse } from "@utils/response";
+import { sendErrorResponse } from "@tools/response";
 
 import { uri, PORT } from "@config/index";
 import mongoose from "mongoose";
@@ -46,7 +49,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  limit: 100,
+  limit: 6000,
   standardHeaders: "draft-7",
   // legacyHeaders: false,
   handler: (req, res) => {
@@ -57,14 +60,13 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests.
 app.use(limiter);
 
-app.use("/rail-robot", railRobotRouter);
-app.use("/accident", accidentRouter);
-app.use("/alarm", alarmRouter);
+app.use("/rail-robot", railRobotRouter, wssServer.broadcast);
+app.use("/accident", accidentRouter, wssServer.broadcast);
+app.use("/alarm", alarmRouter, wssServer.broadcast);
+app.use("/admin", adminRouter, wssServer.broadcast);
 
 app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
-
-app.use("/reset", resetRouter);
 
 // error handler
 app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
@@ -81,12 +83,18 @@ app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+wssServer.connection();
+
 mongoose
   .connect(uri)
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(app.get("port"), () => {
+    const server = app.listen(app.get("port"), () => {
       console.log(app.get("port"), "번에서 대기중");
+    });
+
+    server.on("upgrade", (request, socket, head) => {
+      wssServer.subscribe(request, socket, head);
     });
   })
   .catch((err) => {

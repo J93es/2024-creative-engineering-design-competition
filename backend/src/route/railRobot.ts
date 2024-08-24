@@ -1,8 +1,9 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse, sendErrorResponse } from "@utils/response";
+import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
 
 import { railRobotService } from "@service/index";
+
 const router: Router = express.Router();
 
 /* GET home page. */
@@ -10,10 +11,8 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await railRobotService.getAllRobot();
     sendSuccessResponse(res, data);
-    next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 
@@ -21,10 +20,8 @@ router.get("/each", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await railRobotService.getRobot(req.body.id);
     sendSuccessResponse(res, data);
-    next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 
@@ -35,7 +32,6 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 
@@ -48,7 +44,6 @@ router.put(
       next();
     } catch (error) {
       sendErrorResponse(res, error);
-      next(error);
     }
   }
 );
@@ -62,7 +57,6 @@ router.put(
       next();
     } catch (error) {
       sendErrorResponse(res, error);
-      next(error);
     }
   }
 );
@@ -74,7 +68,6 @@ router.put("/stop", async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 
@@ -90,7 +83,6 @@ router.put(
       next();
     } catch (error) {
       sendErrorResponse(res, error);
-      next(error);
     }
   }
 );
@@ -102,7 +94,6 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 

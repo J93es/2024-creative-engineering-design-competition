@@ -1,10 +1,11 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse, sendErrorResponse } from "@utils/response";
+import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
 
 import { idGenerator } from "@utils/id-generator/index";
 
 import { accidentService } from "@service/index";
+
 const router: Router = express.Router();
 
 /* GET home page. */
@@ -16,10 +17,8 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
     sendSuccessResponse(res, data);
-    next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 
@@ -31,7 +30,6 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 
@@ -44,7 +42,6 @@ router.put(
       next();
     } catch (error) {
       sendErrorResponse(res, error);
-      next(error);
     }
   }
 );

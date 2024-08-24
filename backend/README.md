@@ -69,13 +69,49 @@ export interface RailRobotType {
 
 ## Rate Limiter
 
-If more than 100 requests occur per minute, the rate limiter will be triggered.
+If more than 6000 requests occur per minute, the rate limiter will be triggered.
 
 #### Response: 429
 
 ```json
 {
   "msg": "Too many requests, please try again later."
+}
+```
+
+## Web Soket
+
+When data is changed, server emit data.
+
+### /ws-subscribe
+
+```json
+{
+  "accident": {
+    "id": "147bdf05-a050-4f83-8f2a-0a68d36b537a",
+    "code": "0",
+    "location": 3,
+    "discoverorRobotId": "0",
+    "status": "0"
+  },
+  "railRobots": {
+    "0": {
+      "id": "0",
+      "command": "5",
+      "currentLocation": 0,
+      "targetLocation": 3,
+      "patrolStartLocation": 0,
+      "patrolEndLocation": 10
+    },
+    "1": {
+      "id": "1",
+      "command": "0",
+      "currentLocation": 20,
+      "targetLocation": 0,
+      "patrolStartLocation": 10,
+      "patrolEndLocation": 20
+    }
+  }
 }
 ```
 
@@ -430,9 +466,51 @@ Stops the alarm.
 - rail-robot patroling is starting
 - accident code is updated
 
-## Reset Router
+## Admin Router
 
-### DELETE /reset
+### GET admin/
+
+Get all rail robots and current accident data.
+
+#### Request
+
+```json
+{}
+```
+
+#### Response
+
+```json
+{
+  "accident": {
+    "id": "147bdf05-a050-4f83-8f2a-0a68d36b537a",
+    "code": "0",
+    "location": 3,
+    "discoverorRobotId": "0",
+    "status": "0"
+  },
+  "railRobots": {
+    "0": {
+      "id": "0",
+      "command": "5",
+      "currentLocation": 0,
+      "targetLocation": 3,
+      "patrolStartLocation": 0,
+      "patrolEndLocation": 10
+    },
+    "1": {
+      "id": "1",
+      "command": "0",
+      "currentLocation": 20,
+      "targetLocation": 0,
+      "patrolStartLocation": 10,
+      "patrolEndLocation": 20
+    }
+  }
+}
+```
+
+### DELETE admin/reset
 
 Delete all information in the database and create two pieces of rail robot information.
 
@@ -446,6 +524,6 @@ Delete all information in the database and create two pieces of rail robot infor
 
 ```json
 {
-  "msg": "Deleted successfully"
+  "msg": "Reseted successfully"
 }
 ```

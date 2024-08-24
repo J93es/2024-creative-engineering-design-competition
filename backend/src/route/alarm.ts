@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse, sendErrorResponse } from "@utils/response";
+import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
 
 import { accidentService, railRobotService } from "@service/index";
 const router: Router = express.Router();
@@ -15,7 +15,6 @@ router.put(
       next();
     } catch (error) {
       sendErrorResponse(res, error);
-      next(error);
     }
   }
 );
@@ -30,7 +29,6 @@ router.put("/end", async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     sendErrorResponse(res, error);
-    next(error);
   }
 });
 

@@ -35,12 +35,13 @@
     "typescript": "^5.4.5"
   },
   "_moduleAliases": {
-    "@core": "dist/src/core",
     "@config": "dist/src/config",
+    "@core": "dist/src/core",
     "@model": "dist/src/model",
     "@repository": "dist/src/repository",
     "@service": "dist/src/service",
     "@route": "dist/src/route",
+    "@tools": "dist/src/tools",
     "@utils": "dist/src/utils"
   },
   "scripts": {

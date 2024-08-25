@@ -1,10 +1,10 @@
-export const enum Code {
+export const enum AccidentCode {
   CAR_CRASH = "0",
   FIRE = "1",
   FLOOD = "2",
 }
 
-export const enum Status {
+export const enum AccidentStatus {
   DETECTED = "0",
   IGNORED = "1",
   ALARMING = "2",
@@ -13,18 +13,26 @@ export const enum Status {
 
 export interface AccidentType {
   id: string;
-  code: Code.CAR_CRASH | Code.FIRE | Code.FLOOD;
+  code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD;
   location: number;
   discoverorRobotId: string;
-  status: Status.DETECTED | Status.IGNORED | Status.ALARMING | Status.END;
+  status:
+    | AccidentStatus.DETECTED
+    | AccidentStatus.IGNORED
+    | AccidentStatus.ALARMING
+    | AccidentStatus.END;
 }
 
 export default class Accident implements AccidentType {
   id: string;
-  code: Code.CAR_CRASH | Code.FIRE | Code.FLOOD;
+  code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD;
   location: number;
   discoverorRobotId: string;
-  status: Status.DETECTED | Status.IGNORED | Status.ALARMING | Status.END;
+  status:
+    | AccidentStatus.DETECTED
+    | AccidentStatus.IGNORED
+    | AccidentStatus.ALARMING
+    | AccidentStatus.END;
 
   constructor(data: AccidentType) {
     this.id = data.id;

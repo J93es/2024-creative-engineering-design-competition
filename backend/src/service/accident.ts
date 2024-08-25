@@ -1,5 +1,5 @@
 import { AccidentService } from "@core/service/accident";
-import { AccidentType, Status } from "@model/accident";
+import { AccidentType, AccidentStatus } from "@model/accident";
 import { accidentRepository } from "@repository/index";
 
 import { railRobotService } from "@service/index";
@@ -7,8 +7,8 @@ import { railRobotService } from "@service/index";
 export class AccidentServ implements AccidentService {
   async isExist(): Promise<boolean> {
     const [detectedAccident, alarmingAccident] = await Promise.all([
-      accidentRepository.readByStatus(Status.DETECTED),
-      accidentRepository.readByStatus(Status.ALARMING),
+      accidentRepository.readByStatus(AccidentStatus.DETECTED),
+      accidentRepository.readByStatus(AccidentStatus.ALARMING),
     ]);
 
     return detectedAccident.length > 0 || alarmingAccident.length > 0;
@@ -16,8 +16,8 @@ export class AccidentServ implements AccidentService {
 
   async get(): Promise<AccidentType> {
     const [detectedAccident, alarmingAccident] = await Promise.all([
-      accidentRepository.readByStatus(Status.DETECTED),
-      accidentRepository.readByStatus(Status.ALARMING),
+      accidentRepository.readByStatus(AccidentStatus.DETECTED),
+      accidentRepository.readByStatus(AccidentStatus.ALARMING),
     ]);
 
     return detectedAccident[0] || alarmingAccident[0];
@@ -52,7 +52,7 @@ export class AccidentServ implements AccidentService {
 
     return await accidentRepository.update({
       ...currentAccident,
-      status: Status.IGNORED,
+      status: AccidentStatus.IGNORED,
     });
   }
 
@@ -65,7 +65,7 @@ export class AccidentServ implements AccidentService {
 
     return await accidentRepository.update({
       ...currentAccident,
-      status: Status.ALARMING,
+      status: AccidentStatus.ALARMING,
     });
   }
 
@@ -78,7 +78,7 @@ export class AccidentServ implements AccidentService {
 
     return await accidentRepository.update({
       ...currentAccident,
-      status: Status.END,
+      status: AccidentStatus.END,
     });
   }
 }

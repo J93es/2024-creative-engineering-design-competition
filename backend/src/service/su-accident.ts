@@ -1,5 +1,5 @@
 import { SuAccidentService } from "@core/service/su-accident";
-import { AccidentType, Status } from "@model/accident";
+import { AccidentType, AccidentStatus } from "@model/accident";
 import { accidentRepository } from "@repository/index";
 
 export class SuAccidentServ implements SuAccidentService {
@@ -25,8 +25,8 @@ export class SuAccidentServ implements SuAccidentService {
 
   async isCurrentAccidentExist(): Promise<boolean> {
     const [detectedAccident, alarmingAccident] = await Promise.all([
-      accidentRepository.readByStatus(Status.DETECTED),
-      accidentRepository.readByStatus(Status.ALARMING),
+      accidentRepository.readByStatus(AccidentStatus.DETECTED),
+      accidentRepository.readByStatus(AccidentStatus.ALARMING),
     ]);
 
     return detectedAccident.length > 0 || alarmingAccident.length > 0;

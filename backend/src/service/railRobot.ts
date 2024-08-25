@@ -1,7 +1,7 @@
 import { RailRobotService } from "@core/service/railRobot";
-import RailRobot, {
+import {
   RailRobotType,
-  Command,
+  RailRobotCommand,
   MAX_LOCATION,
 } from "@model/railRobot";
 import { railRobotRepository } from "@repository/index";
@@ -57,7 +57,7 @@ export class RailRobotServ implements RailRobotService {
       const updatePromise = cmdUpdateOption
         ? railRobotRepository.update({
             ...railRobot,
-            command: Command.PATROL,
+            command: RailRobotCommand.PATROL,
             patrolStartLocation: patrolStartLocation,
             patrolEndLocation: patrolEndLocation,
           })
@@ -115,7 +115,7 @@ export class RailRobotServ implements RailRobotService {
         await railRobotRepository.update({
           ...railRobot,
           targetLocation: targetLocation,
-          command: Command.MOVE_TO_TARGET_LOCATION,
+          command: RailRobotCommand.MOVE_TO_TARGET_LOCATION,
         });
         break;
       }
@@ -159,7 +159,7 @@ export class RailRobotServ implements RailRobotService {
       const updatePromise = railRobotRepository.update({
         ...railRobot,
         targetLocation: location,
-        command: Command.ALARMING,
+        command: RailRobotCommand.ALARMING,
       });
 
       updatePromises.push(updatePromise);
@@ -171,7 +171,7 @@ export class RailRobotServ implements RailRobotService {
   async stop(id: string): Promise<RailRobotType> {
     return await railRobotRepository.update({
       id: id,
-      command: Command.STOP,
+      command: RailRobotCommand.STOP,
     });
   }
 

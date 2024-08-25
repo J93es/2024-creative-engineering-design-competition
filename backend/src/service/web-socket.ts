@@ -3,16 +3,16 @@ import { RailRobotType } from "@model/railRobot";
 import { accidentService, railRobotService } from "@service/index";
 
 // WebSocket 서버 설정
-const wss = new WebSocketServer({ noServer: true });
+const webSoketServer = new WebSocketServer({ noServer: true });
 
 // WebSocket 클라이언트 목록
 const clients: WebSocket[] = [];
 
-export class Wss {
+export class WebSocketServ {
   connection() {
     try {
       // WebSocket 연결 처리
-      wss.on("connection", (ws: WebSocket) => {
+      webSoketServer.on("connection", (ws: WebSocket) => {
         clients.push(ws);
         console.log("New WebSocket connection established.");
 
@@ -37,8 +37,8 @@ export class Wss {
         .pathname;
 
       if (pathname === "/ws-subscribe") {
-        wss.handleUpgrade(request, socket, head, (ws) => {
-          wss.emit("connection", ws, request);
+        webSoketServer.handleUpgrade(request, socket, head, (ws) => {
+          webSoketServer.emit("connection", ws, request);
         });
       } else {
         socket.destroy();
@@ -72,7 +72,9 @@ export class Wss {
         }
       });
 
-      console.log("Broadcasted data to all clients.");
+      if (clients.length >= 0) {
+        console.log("Broadcasted data to all clients.");
+      }
     } catch (error) {
       console.error(error);
     }

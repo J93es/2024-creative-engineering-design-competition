@@ -15,7 +15,6 @@ import express, {
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
-import { WebSocketServer, WebSocket } from "ws";
 
 import corsOptions from "@utils/cors/index";
 
@@ -26,7 +25,7 @@ import accidentRouter from "@route/accident";
 import alarmRouter from "@route/alarm";
 import adminRouter from "@route/admin";
 
-import { wssServer } from "@utils/live-connection/index";
+import { webSoketService } from "@service/index";
 
 import { rateLimit } from "express-rate-limit";
 import { sendErrorResponse } from "@tools/response";
@@ -60,10 +59,10 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests.
 app.use(limiter);
 
-app.use("/rail-robot", railRobotRouter, wssServer.broadcast);
-app.use("/accident", accidentRouter, wssServer.broadcast);
-app.use("/alarm", alarmRouter, wssServer.broadcast);
-app.use("/admin", adminRouter, wssServer.broadcast);
+app.use("/rail-robot", railRobotRouter, webSoketService.broadcast);
+app.use("/accident", accidentRouter, webSoketService.broadcast);
+app.use("/alarm", alarmRouter, webSoketService.broadcast);
+app.use("/admin", adminRouter, webSoketService.broadcast);
 
 app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
@@ -83,7 +82,7 @@ app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-wssServer.connection();
+webSoketService.connection();
 
 mongoose
   .connect(uri)
@@ -94,7 +93,7 @@ mongoose
     });
 
     server.on("upgrade", (request, socket, head) => {
-      wssServer.subscribe(request, socket, head);
+      webSoketService.subscribe(request, socket, head);
     });
   })
   .catch((err) => {

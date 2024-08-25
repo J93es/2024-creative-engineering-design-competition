@@ -1,6 +1,6 @@
 export const MAX_LOCATION = 20;
 
-export const enum Command {
+export const enum RailRobotCommand {
   PATROL = "0",
   ALARMING = "1",
   CHARGE = "3",
@@ -11,11 +11,11 @@ export const enum Command {
 export interface RailRobotType {
   id: string;
   command:
-    | Command.PATROL
-    | Command.ALARMING
-    | Command.CHARGE
-    | Command.MOVE_TO_TARGET_LOCATION
-    | Command.STOP;
+    | RailRobotCommand.PATROL
+    | RailRobotCommand.ALARMING
+    | RailRobotCommand.CHARGE
+    | RailRobotCommand.MOVE_TO_TARGET_LOCATION
+    | RailRobotCommand.STOP;
   currentLocation: number;
   targetLocation?: number;
   patrolStartLocation?: number;
@@ -25,11 +25,11 @@ export interface RailRobotType {
 export default class RailRobot implements RailRobotType {
   id: string;
   command:
-    | Command.PATROL
-    | Command.ALARMING
-    | Command.CHARGE
-    | Command.MOVE_TO_TARGET_LOCATION
-    | Command.STOP;
+    | RailRobotCommand.PATROL
+    | RailRobotCommand.ALARMING
+    | RailRobotCommand.CHARGE
+    | RailRobotCommand.MOVE_TO_TARGET_LOCATION
+    | RailRobotCommand.STOP;
   currentLocation: number;
   targetLocation?: number;
   patrolStartLocation?: number;

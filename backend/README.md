@@ -5,7 +5,7 @@
 ### Accident Code
 
 ```typescript
-export const enum Code {
+export const enum AccidentCode {
   CAR_CRASH = "0",
   FIRE = "1",
   FLOOD = "2",
@@ -15,7 +15,7 @@ export const enum Code {
 ### Accident Status
 
 ```typescript
-export const enum Status {
+export const enum AccidentStatus {
   DETECTED = "0",
   IGNORED = "1",
   ALARMING = "2",
@@ -26,7 +26,7 @@ export const enum Status {
 ### Rail Robot Command
 
 ```typescript
-export const enum Command {
+export const enum RailRobotCommand {
   PATROL = "0",
   ALARMING = "1",
   CHARGE = "3",
@@ -59,7 +59,7 @@ export interface RailRobotType {
     | Command.ALARMING
     | Command.CHARGE
     | Command.MOVE_TO_TARGET_LOCATION
-    | Command.STOP; // Default: Command.PATROL
+    | Command.STOP; // Default: Command.STOP
   currentLocation: number; // Required
   targetLocation?: number;
   patrolStartLocation?: number;

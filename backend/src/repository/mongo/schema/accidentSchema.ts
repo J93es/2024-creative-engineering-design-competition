@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { AccidentType, Code, Status } from "@model/accident";
+import { AccidentType, AccidentCode, AccidentStatus } from "@model/accident";
 
 const { Schema } = mongoose;
 
@@ -8,14 +8,19 @@ export const accidentSchema = new Schema<AccidentType>({
 
   code: {
     type: String,
-    enum: [Code.CAR_CRASH, Code.FIRE, Code.FLOOD],
-    default: Code.CAR_CRASH,
+    enum: [AccidentCode.CAR_CRASH, AccidentCode.FIRE, AccidentCode.FLOOD],
+    default: AccidentCode.CAR_CRASH,
   },
   location: { type: Number, required: true },
   discoverorRobotId: { type: String, required: true },
   status: {
     type: String,
-    enum: [Status.DETECTED, Status.IGNORED, Status.ALARMING, Status.END],
-    default: Status.DETECTED,
+    enum: [
+      AccidentStatus.DETECTED,
+      AccidentStatus.IGNORED,
+      AccidentStatus.ALARMING,
+      AccidentStatus.END,
+    ],
+    default: AccidentStatus.DETECTED,
   },
 });

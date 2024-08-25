@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { RailRobotType, Command } from "@model/railRobot";
+import { RailRobotType, RailRobotCommand } from "@model/railRobot";
 
 const { Schema } = mongoose;
 
@@ -9,13 +9,13 @@ export const railRobotSchema = new Schema<RailRobotType>({
   command: {
     type: String,
     enum: [
-      Command.PATROL,
-      Command.ALARMING,
-      Command.CHARGE,
-      Command.MOVE_TO_TARGET_LOCATION,
-      Command.STOP,
+      RailRobotCommand.PATROL,
+      RailRobotCommand.ALARMING,
+      RailRobotCommand.CHARGE,
+      RailRobotCommand.MOVE_TO_TARGET_LOCATION,
+      RailRobotCommand.STOP,
     ],
-    default: Command.PATROL,
+    default: RailRobotCommand.STOP,
   },
   currentLocation: { type: Number, required: true },
   targetLocation: { type: Number },

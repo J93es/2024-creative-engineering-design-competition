@@ -39,8 +39,8 @@
     "@core": "dist/src/core",
     "@model": "dist/src/model",
     "@repository": "dist/src/repository",
-    "@service": "dist/src/service",
     "@route": "dist/src/route",
+    "@service": "dist/src/service",
     "@tools": "dist/src/tools",
     "@utils": "dist/src/utils"
   },

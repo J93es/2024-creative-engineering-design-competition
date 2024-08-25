@@ -1,7 +1,7 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
 import { RailRobotType } from "@model/railRobot";
-import { Command } from "@model/railRobot";
+import { RailRobotCommand } from "@model/railRobot";
 import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
 
 import {
@@ -41,12 +41,12 @@ router.delete(
       await Promise.all([
         railRobotService.addRobot({
           id: "0",
-          command: Command.STOP,
+          command: RailRobotCommand.STOP,
           currentLocation: 0,
         }),
         railRobotService.addRobot({
           id: "1",
-          command: Command.STOP,
+          command: RailRobotCommand.STOP,
           currentLocation: 10,
         }),
       ]);

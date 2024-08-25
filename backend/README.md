@@ -42,10 +42,14 @@ export const enum RailRobotCommand {
 ```typescript
 export interface AccidentType {
   id: string; // Auto-generated on POST
-  code: Code.CAR_CRASH | Code.FIRE | Code.FLOOD; // Default: Code.CAR_CRASH
+  code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD; // Default: AccidentCode.CAR_CRASH
   location: number; // Required
   discoverorRobotId: string; // Required
-  status: Status.DETECTED | Status.IGNORED | Status.ALARMING | Status.END; // Default: Status.DETECTED
+  status:
+    | AccidentStatus.DETECTED
+    | AccidentStatus.IGNORED
+    | AccidentStatus.ALARMING
+    | AccidentStatus.END; // Default: AccidentStatus.DETECTED
 }
 ```
 
@@ -55,11 +59,11 @@ export interface AccidentType {
 export interface RailRobotType {
   id: string; // Required
   command:
-    | Command.PATROL
-    | Command.ALARMING
-    | Command.CHARGE
-    | Command.MOVE_TO_TARGET_LOCATION
-    | Command.STOP; // Default: Command.STOP
+    | RailRobotCommand.PATROL
+    | RailRobotCommand.ALARMING
+    | RailRobotCommand.CHARGE
+    | RailRobotCommand.MOVE_TO_TARGET_LOCATION
+    | RailRobotCommand.STOP; // Default: RailRobotCommand.STOP
   currentLocation: number; // Required
   targetLocation?: number;
   patrolStartLocation?: number;

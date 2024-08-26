@@ -1,22 +1,14 @@
-import "module-alias/register";
+// import "module-alias/register";
 
 import dotenv from "dotenv";
 dotenv.config();
 
 import logger from "morgan";
-import createError from "http-errors";
-import express, {
-  Application,
-  Request,
-  Response,
-  NextFunction,
-  Errback,
-} from "express";
+import express, { Application } from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
-
-import corsOptions from "@utils/cors/index";
+import mongoose from "mongoose";
 
 import suRailRobotRouter from "@route/su-railRobot";
 import suAccidentRouter from "@route/su-accident";
@@ -26,19 +18,20 @@ import alarmRouter from "@route/alarm";
 import adminRouter from "@route/admin";
 
 import { webSoketService } from "@service/index";
-
-import { rateLimit } from "express-rate-limit";
-import { sendErrorResponse } from "@tools/response";
-
-import { uri, PORT } from "@config/index";
-import mongoose from "mongoose";
+import { uri, PORT, isProduction } from "@config/index";
+import { rateLimiter, corsOptions, errorHandler } from "@utils/index";
 
 const app: Application = express();
 
-app.set("port", process.env.PORT || PORT || 8000);
+app.set("port", PORT || 8000);
 app.set("view engine", "ejs");
 
-app.use(logger("dev"));
+if (isProduction) {
+  app.use(logger("combined"));
+} else {
+  app.use(logger("dev"));
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -46,41 +39,18 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000,
-  limit: 6000,
-  standardHeaders: "draft-7",
-  // legacyHeaders: false,
-  handler: (req, res) => {
-    sendErrorResponse(res, "Too many requests, please try again later.", 429);
-  },
-});
-
-// Apply the rate limiting middleware to all requests.
-app.use(limiter);
-
-app.use("/rail-robot", railRobotRouter, webSoketService.broadcast);
-app.use("/accident", accidentRouter, webSoketService.broadcast);
-app.use("/alarm", alarmRouter, webSoketService.broadcast);
-app.use("/admin", adminRouter, webSoketService.broadcast);
-
+app.use(rateLimiter.makeLimit(1, 6000));
+app.use("/rail-robot", railRobotRouter);
+app.use("/accident", accidentRouter);
+app.use("/alarm", alarmRouter);
+app.use("/admin", adminRouter);
 app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
 
-// error handler
-app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
-  // set locals, only providing error in development
-  try {
-    res.locals.message = err.toString();
-    res.locals.error = req.app.get("env") === "development" ? err : {};
-
-    console.error(err);
-    // render the error page
-    res.status(500);
-  } catch (err) {
-    res.status(500);
-  }
-});
+app.use(errorHandler.handleNotFound);
+app.use(errorHandler.handleAssertionError);
+app.use(errorHandler.handleDatabaseError);
+app.use(errorHandler.handleError);
 
 webSoketService.connection();
 

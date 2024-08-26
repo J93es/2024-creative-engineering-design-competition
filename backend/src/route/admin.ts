@@ -9,31 +9,40 @@ import {
   suRailRobotService,
   railRobotService,
   accidentService,
+  webSoketService,
 } from "@service/index";
+
+import { wrapAsyncController } from "@utils/index";
+
 const router: Router = express.Router();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const [accident, railRobotList] = await Promise.all([
-      accidentService.get(),
-      railRobotService.getAllRobot(),
-    ]);
+router.get(
+  "/",
+  wrapAsyncController(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const [accident, railRobotList] = await Promise.all([
+        accidentService.get(),
+        railRobotService.getAllRobot(),
+      ]);
 
-    const railRobots: { [key: string]: RailRobotType } = {};
-    railRobotList.forEach((railRobot) => {
-      railRobots[railRobot.id] = railRobot;
-    });
+      const railRobots: { [key: string]: RailRobotType } = {};
+      railRobotList.forEach((railRobot) => {
+        railRobots[railRobot.id] = railRobot;
+      });
 
-    sendSuccessResponse(res, { accident: accident, railRobots: railRobots });
-  } catch (error) {
-    sendErrorResponse(res, error);
-  }
-});
+      sendSuccessResponse(res, {
+        accident: accident,
+        railRobots: railRobots,
+      });
+      next();
+    }
+  )
+);
 
 router.delete(
   "/reset",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
+  wrapAsyncController(
+    async (req: Request, res: Response, next: NextFunction) => {
       await Promise.all([
         suAccidentService.reset(),
         suRailRobotService.reset(),
@@ -51,11 +60,10 @@ router.delete(
         }),
       ]);
       sendSuccessResponse(res, { message: "Reseted successfully" });
+      webSoketService.broadcast();
       next();
-    } catch (error) {
-      sendErrorResponse(res, error);
     }
-  }
+  )
 );
 
 export default router;

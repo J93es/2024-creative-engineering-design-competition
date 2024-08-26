@@ -18,3 +18,5 @@ export const whitelist = JSON.parse(
       "http://127.0.0.1:8000",
     ])
 );
+
+export const isProduction = process.env.DEVELOPMENT_ENV !== "development";

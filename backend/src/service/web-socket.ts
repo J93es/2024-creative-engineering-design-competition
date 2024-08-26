@@ -76,6 +76,6 @@ export class WebSocketServ {
       }
     });
 
-    console.log("Broadcasted data to all clients.");
+    console.log(`Broadcasted data to ${clients.length} clients.`);
   }
 }

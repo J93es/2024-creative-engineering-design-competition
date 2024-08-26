@@ -25,7 +25,7 @@ export class AccidentServ implements AccidentService {
 
   async report(data: AccidentType): Promise<AccidentType> {
     if (await this.isExist()) {
-      throw new Error("current Accident is already exist");
+      throw new Error("Current Accident is already exist");
     }
 
     if (!data.location) {

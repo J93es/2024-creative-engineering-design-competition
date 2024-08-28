@@ -22,8 +22,8 @@ export class AuthServ implements AuthService {
 
   isAuthentic = (req: Request): boolean => {
     try {
-      const id = req.headers.cedc_id as string;
-      const password = req.headers.cedc_password as string;
+      const id = req.headers.cedcid as string;
+      const password = req.headers.cedcpassword as string;
       this.checkAuthentic({ id: id, password: password });
       return true;
     } catch (error) {
@@ -36,8 +36,8 @@ export class AuthServ implements AuthService {
     res: Response,
     next: NextFunction
   ): void => {
-    const id = req.headers.cedc_id as string;
-    const password = req.headers.cedc_password as string;
+    const id = req.headers.cedcid as string;
+    const password = req.headers.cedcpassword as string;
 
     console.log(id, password);
 

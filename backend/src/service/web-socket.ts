@@ -12,30 +12,43 @@ const webSoketServer = new WebSocketServer({ noServer: true });
 const clients: WebSocket[] = [];
 
 export class WebSocketServ {
-  connection() {
+  getBroadcastData = async () => {
+    const [accident, railRobotList] = await Promise.all([
+      accidentService.get(),
+      railRobotService.getAllRobot(),
+    ]);
+
+    const railRobots: { [key: string]: RailRobotType } = {};
+    railRobotList.forEach((railRobot) => {
+      railRobots[railRobot.id] = railRobot;
+    });
+
+    return JSON.stringify({
+      accident: accident || {},
+      railRobots: railRobots || {},
+    });
+  };
+
+  connection = () => {
     try {
       // WebSocket 연결 처리
-      webSoketServer.on("connection", (ws: WebSocket, req: Request) => {
+      webSoketServer.on("connection", async (ws: WebSocket, req: Request) => {
         if (!authService.isAuthentic(req)) {
           ws.send("Unauthorized");
           ws.close();
           console.log(
-            `${getIP(
-              req
-            )} - - [${new Date()}] "New WebSocket connection established. But unauthorized" - "${
-              req.headers["user-agent"]
-            }"`
+            `${getIP(req)} - - [${new Date()}] "Websocket unauthorized - ${
+              clients.length
+            } clients" `
           );
           return;
         }
 
         clients.push(ws);
         console.log(
-          `${getIP(
-            req
-          )} - - [${new Date()}] "New WebSocket connection established." - "${
-            req.headers["user-agent"]
-          }"`
+          `${getIP(req)} - - [${new Date()}] "WebSocket connection - ${
+            clients.length
+          } clients."`
         );
 
         ws.on("close", () => {
@@ -46,20 +59,21 @@ export class WebSocketServ {
             clients.splice(index, 1);
           }
           console.log(
-            `${getIP(
-              req
-            )} - - [${new Date()}] "WebSocket connection closed." - "${
-              req.headers["user-agent"]
-            }"`
+            `${getIP(req)} - - [${new Date()}] "WebSocket closed - ${
+              clients.length
+            } clients."`
           );
         });
+
+        const broadcastData = await this.getBroadcastData();
+        ws.send(broadcastData);
       });
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  subscribe(request: any, socket: any, head: any) {
+  subscribe = (request: any, socket: any, head: any) => {
     try {
       // 요청 URL에 따라 WebSocket 연결을 처리
       const pathname = new URL(request.url!, `http://${request.headers.host}`)
@@ -76,28 +90,15 @@ export class WebSocketServ {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async broadcast() {
+  broadcast = async () => {
     try {
       if (clients.length === 0) {
         return;
       }
 
-      const [accident, railRobotList] = await Promise.all([
-        accidentService.get(),
-        railRobotService.getAllRobot(),
-      ]);
-
-      const railRobots: { [key: string]: RailRobotType } = {};
-      railRobotList.forEach((railRobot) => {
-        railRobots[railRobot.id] = railRobot;
-      });
-
-      const broadcastData = JSON.stringify({
-        accident: accident,
-        railRobots: railRobots,
-      });
+      const broadcastData = await this.getBroadcastData();
 
       // 클라이언트 목록에 데이터를 전송
       clients.forEach((client) => {
@@ -110,5 +111,5 @@ export class WebSocketServ {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 }

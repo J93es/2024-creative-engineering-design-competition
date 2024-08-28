@@ -1,7 +1,7 @@
 import { UuidGenerator } from "@utils/id-generator/uuid";
 import { RateLimiter } from "@utils/rate-limiter/rateLimiter";
 import { ErrorHandler } from "@utils/error-handler/error-handler";
-import { corsOptions } from "@utils/cors/index";
+import { corsOptions } from "@utils/cors/cors";
 import { wrapAsyncController } from "@utils/wrap-async/wrapAsync";
 
 export const idGenerator = new UuidGenerator();

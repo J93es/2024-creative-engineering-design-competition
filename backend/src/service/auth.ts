@@ -1,43 +1,42 @@
 import { authData } from "@config/index";
 import { Request, Response, NextFunction } from "express";
+import { AuthType } from "@model/interface/auth";
 import { AuthService } from "@core/service/auth";
 import { AuthError } from "@model/interface/authError";
+import url from "url";
 
 export class AuthServ implements AuthService {
-  checkAuthentic = (req: Request): void => {
-    // const id = req.body.clientId as string;
-    // const password = req.body.clientPassword as string;
+  checkAuthentic = (req: Request, useQueryOption: boolean = false): void => {
+    const headersAuthData = (req.headers["cedc-auth"] as string) ?? "";
+    const [headersId, headersPassword] = headersAuthData
+      ?.replace(/\s+/g, "")
+      ?.split(":") ?? ["id", "password"];
+    const headerFoundAdmin = authData.find((admin: any) => {
+      return admin.id === headersId && admin.password === headersPassword;
+    });
 
-    // req.body.clientId = null;
-    // req.body.clientPassword = null;
+    const queryAuthData =
+      (url.parse(req.url, true).query["cedc-auth"] as string) ?? "";
+    const [queryId, queryPassword] = queryAuthData
+      ?.replace(/\s+/g, "")
+      ?.split(":") ?? ["id", "password"];
+    const queryFoundAdmin = authData.find((admin: any) => {
+      return admin.id === queryId && admin.password === queryPassword;
+    });
 
-    // try {
-    //   delete req.body.cedc_id;
-    //   delete req.body.cedc_password;
-    // } catch {}
-
-    const reqAuthData = req.headers["cedc-auth"] as string;
-    if (!reqAuthData) {
-      throw new AuthError("Unauthorized");
+    if (headerFoundAdmin) {
+      return;
+    }
+    if (useQueryOption && queryFoundAdmin) {
+      return;
     }
 
-    const [id, password] = reqAuthData?.replace(/\s+/g, "")?.split(":") ?? [
-      "id",
-      "password",
-    ];
-
-    const admin = authData.find(
-      (admin: any) => admin.id === id && admin.password === password
-    );
-
-    if (!admin) {
-      throw new AuthError("Unauthorized");
-    }
+    throw new AuthError("Unauthorized");
   };
 
-  isAuthentic = (req: Request): boolean => {
+  isAuthentic = (req: Request, useQueryOption?: boolean): boolean => {
     try {
-      this.checkAuthentic(req);
+      this.checkAuthentic(req, useQueryOption);
       return true;
     } catch (error) {
       return false;

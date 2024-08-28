@@ -33,15 +33,19 @@ export class WebSocketServ {
     try {
       // WebSocket 연결 처리
       webSoketServer.on("connection", async (ws: WebSocket, req: Request) => {
-        if (!authService.isAuthentic(req)) {
+        if (!authService.isAuthentic(req, true)) {
           ws.send("Unauthorized");
           ws.close();
-          logger.log("Unauthorized WebSocket connection", req);
+          logger.log("WebSocket", "unauthorized request", req);
           return;
         }
 
         clients.push(ws);
-        logger.log(`WebSocket connected - ${clients.length} clients.`, req);
+        logger.log(
+          "WebSocket",
+          `connection established - ${clients.length} clients.`,
+          req
+        );
 
         ws.on("close", () => {
           // 연결이 종료되면 클라이언트 목록에서 제거
@@ -51,7 +55,8 @@ export class WebSocketServ {
             clients.splice(index, 1);
           }
           logger.log(
-            `WebSocket disconnected - ${clients.length} clients.`,
+            "WebSocket",
+            `disconnected - ${clients.length} clients.`,
             req
           );
         });
@@ -98,7 +103,7 @@ export class WebSocketServ {
         }
       });
 
-      logger.log(`Broadcasted data to ${clients.length} clients.`);
+      logger.log("WebSocket", `broadcasted data to ${clients.length} clients.`);
     } catch (error) {
       console.error(error);
     }

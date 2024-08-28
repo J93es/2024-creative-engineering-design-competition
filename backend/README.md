@@ -73,7 +73,7 @@ export interface RailRobotType {
 
 ## Auth
 
-Authentication information needs to be added to the headers.
+Authentication information needs to be added to the headers or query.
 
 #### Headers
 
@@ -82,6 +82,12 @@ Authentication information needs to be added to the headers.
   "cdec-auth": "(your-own-id):(your-own-password)" // Please enter your ID and password in the parentheses.
 }
 ```
+
+#### Query
+
+Only permitted on WebSocket. Please enter your ID and password in the parentheses.
+
+- /ws-subscribe?cdec-auth=(your-own-id):(your-own-password)
 
 ## Rate Limiter
 

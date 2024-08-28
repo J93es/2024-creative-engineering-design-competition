@@ -28,7 +28,7 @@ export class Logger {
     return formattedDate;
   };
 
-  log = (message: string, req?: Request) => {
+  log = (head: string, message: string, req?: Request) => {
     if (!req) {
       console.log(
         `[${this.formatDateToCustomString(new Date())}] - ${message}`
@@ -39,7 +39,7 @@ export class Logger {
     console.log(
       `${getIP(req)} - - [${this.formatDateToCustomString(
         new Date()
-      )}] - ${message}`
+      )}] "${head}" - ${message}`
     );
   };
 }

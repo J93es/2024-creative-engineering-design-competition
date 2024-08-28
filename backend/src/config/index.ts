@@ -25,3 +25,5 @@ export const adminAuthData = JSON.parse(
   process.env.ADMIN_AUTH_DATA ||
     '[{"id":"id-example","password":"password-example"}]'
 );
+
+console.log(adminAuthData);

@@ -79,8 +79,7 @@ Authentication information needs to be added to the headers.
 
 ```json
 {
-  "cdec-id": "your-own-id",
-  "cedc-password": "your-own-password"
+  "cdec-auth": "(your-own-id):(your-own-password)" // Please enter your ID and password in the parentheses.
 }
 ```
 

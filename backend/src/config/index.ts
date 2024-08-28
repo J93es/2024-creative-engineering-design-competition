@@ -21,9 +21,6 @@ export const whitelist = JSON.parse(
 
 export const isProduction = process.env.DEVELOPMENT_ENV !== "development";
 
-export const adminAuthData = JSON.parse(
-  process.env.ADMIN_AUTH_DATA ||
-    '[{"id":"id-example","password":"password-example"}]'
+export const authData = JSON.parse(
+  process.env.AUTH_DATA || '[{"id":"id-example","password":"password-example"}]'
 );
-
-console.log(adminAuthData);

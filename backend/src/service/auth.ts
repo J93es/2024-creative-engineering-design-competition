@@ -1,18 +1,27 @@
-import { adminAuthData } from "@config/index";
+import { authData } from "@config/index";
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "@core/service/auth";
 import { AuthError } from "@model/interface/authError";
-import { AuthType } from "@model/interface/auth";
 
 export class AuthServ implements AuthService {
-  checkAuthentic = (authData: AuthType): void => {
-    if (!authData) {
-      throw new Error("authData is required");
-    }
+  checkAuthentic = (req: Request): void => {
+    // const id = req.body.clientId as string;
+    // const password = req.body.clientPassword as string;
 
-    const admin = adminAuthData.find(
-      (admin: any) =>
-        admin.id === authData.id && admin.password === authData.password
+    // req.body.clientId = null;
+    // req.body.clientPassword = null;
+
+    // try {
+    //   delete req.body.cedc_id;
+    //   delete req.body.cedc_password;
+    // } catch {}
+
+    const reqAuthData = req.headers["cedc-auth"] as string;
+
+    const [id, password] = reqAuthData.replace(/\s+/g, "").split(":");
+
+    const admin = authData.find(
+      (admin: any) => admin.id === id && admin.password === password
     );
 
     if (!admin) {
@@ -22,9 +31,7 @@ export class AuthServ implements AuthService {
 
   isAuthentic = (req: Request): boolean => {
     try {
-      const id = req.headers.cedc_id as string;
-      const password = req.headers.cedc_password as string;
-      this.checkAuthentic({ id: id, password: password });
+      this.checkAuthentic(req);
       return true;
     } catch (error) {
       return false;
@@ -36,12 +43,7 @@ export class AuthServ implements AuthService {
     res: Response,
     next: NextFunction
   ): void => {
-    const id = req.headers.cedc_id as string;
-    const password = req.headers.cedc_password as string;
-
-    console.log(req.headers);
-
-    this.checkAuthentic({ id: id, password: password });
+    this.checkAuthentic(req);
     next();
   };
 }

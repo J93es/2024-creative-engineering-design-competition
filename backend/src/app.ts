@@ -22,7 +22,7 @@ import { uri, PORT, isProduction } from "@config/index";
 import { rateLimiter, corsOptions, errorHandler } from "@utils/index";
 
 const app: Application = express();
-// app.set("trust proxy", 1);
+app.set("trust proxy", "loopback, linklocal, uniquelocal");
 app.set("port", PORT || 8000);
 app.set("view engine", "ejs");
 

@@ -39,7 +39,7 @@ export class AuthServ implements AuthService {
     const id = req.headers.cedc_id as string;
     const password = req.headers.cedc_password as string;
 
-    console.log(id, password);
+    console.log(req.headers);
 
     this.checkAuthentic({ id: id, password: password });
     next();

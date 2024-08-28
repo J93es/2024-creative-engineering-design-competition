@@ -1,5 +1,6 @@
 import { AssertionError } from "assert";
 import { MongooseError } from "mongoose";
+import { AuthError } from "@model/interface/authError";
 import { isProduction } from "@config/index";
 
 export class ErrorHandler {
@@ -21,6 +22,7 @@ export class ErrorHandler {
         type: "AssertionError",
         msg: isProduction ? "AssertionError" : error.message,
       });
+      return;
     }
     next(error);
   }
@@ -32,6 +34,19 @@ export class ErrorHandler {
         type: "MongooseError",
         msg: isProduction ? "MongooseError" : error.message,
       });
+      return;
+    }
+    next(error);
+  }
+
+  handleAuthError(error: any, req: any, res: any, next: any) {
+    if (error instanceof AuthError) {
+      console.error(error);
+      res.status(401).json({
+        type: "AuthError",
+        msg: isProduction ? "AuthError" : error.message,
+      });
+      return;
     }
     next(error);
   }

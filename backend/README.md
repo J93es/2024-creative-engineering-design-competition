@@ -71,6 +71,19 @@ export interface RailRobotType {
 }
 ```
 
+## Auth
+
+Authentication information needs to be added to the headers.
+
+#### Headers
+
+```json
+{
+  "cdec-id": "your-own-id",
+  "cedc-password": "your-own-password"
+}
+```
+
 ## Rate Limiter
 
 If more than 6000 requests occur per minute, the rate limiter will be triggered.

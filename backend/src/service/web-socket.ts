@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { WebSocketServer, WebSocket } from "ws";
 import { RailRobotType } from "@model/railRobot";
 import { accidentService, railRobotService } from "@service/index";
+import { authService } from "@service/index";
 
 // WebSocket 서버 설정
 const webSoketServer = new WebSocketServer({ noServer: true });
@@ -13,7 +14,13 @@ export class WebSocketServ {
   connection() {
     try {
       // WebSocket 연결 처리
-      webSoketServer.on("connection", (ws: WebSocket) => {
+      webSoketServer.on("connection", (ws: WebSocket, req: Request) => {
+        if (!authService.isAuthentic(req)) {
+          ws.send("Unauthorized");
+          ws.close();
+          return;
+        }
+
         clients.push(ws);
         console.log("New WebSocket connection established.");
 

@@ -12,6 +12,9 @@ import { AccidentServ } from "@service/accident";
 
 import { WebSocketServ } from "@service/web-socket";
 
+import { AuthService } from "@core/service/auth";
+import { AuthServ } from "@service/auth";
+
 export const suRailRobotService: SuRailRobotService = new SuRailRobotServ();
 export const suAccidentService: SuAccidentService = new SuAccidentServ();
 
@@ -19,3 +22,5 @@ export const railRobotService: RailRobotService = new RailRobotServ();
 export const accidentService: AccidentService = new AccidentServ();
 
 export const webSoketService = new WebSocketServ();
+
+export const authService: AuthService = new AuthServ();

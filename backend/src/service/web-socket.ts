@@ -27,6 +27,7 @@ export class WebSocketServ {
         ws.on("close", () => {
           // 연결이 종료되면 클라이언트 목록에서 제거
           const index = clients.indexOf(ws);
+          ws.close();
           if (index !== -1) {
             clients.splice(index, 1);
           }
@@ -44,45 +45,50 @@ export class WebSocketServ {
       const pathname = new URL(request.url!, `http://${request.headers.host}`)
         .pathname;
 
-      if (pathname === "/ws-subscribe") {
-        webSoketServer.handleUpgrade(request, socket, head, (ws) => {
-          webSoketServer.emit("connection", ws, request);
-        });
-      } else {
-        socket.destroy();
+      if (pathname !== "/ws-subscribe") {
+        socket.end();
+        return;
       }
+
+      webSoketServer.handleUpgrade(request, socket, head, (ws) => {
+        webSoketServer.emit("connection", ws, request);
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
   async broadcast() {
-    if (clients.length === 0) {
-      return;
-    }
-
-    const [accident, railRobotList] = await Promise.all([
-      accidentService.get(),
-      railRobotService.getAllRobot(),
-    ]);
-
-    const railRobots: { [key: string]: RailRobotType } = {};
-    railRobotList.forEach((railRobot) => {
-      railRobots[railRobot.id] = railRobot;
-    });
-
-    const broadcastData = JSON.stringify({
-      accident: accident,
-      railRobots: railRobots,
-    });
-
-    // 클라이언트 목록에 데이터를 전송
-    clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(broadcastData);
+    try {
+      if (clients.length === 0) {
+        return;
       }
-    });
 
-    console.log(`Broadcasted data to ${clients.length} clients.`);
+      const [accident, railRobotList] = await Promise.all([
+        accidentService.get(),
+        railRobotService.getAllRobot(),
+      ]);
+
+      const railRobots: { [key: string]: RailRobotType } = {};
+      railRobotList.forEach((railRobot) => {
+        railRobots[railRobot.id] = railRobot;
+      });
+
+      const broadcastData = JSON.stringify({
+        accident: accident,
+        railRobots: railRobots,
+      });
+
+      // 클라이언트 목록에 데이터를 전송
+      clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(broadcastData);
+        }
+      });
+
+      console.log(`Broadcasted data to ${clients.length} clients.`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

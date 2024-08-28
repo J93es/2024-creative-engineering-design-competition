@@ -17,8 +17,14 @@ export class AuthServ implements AuthService {
     // } catch {}
 
     const reqAuthData = req.headers["cedc-auth"] as string;
+    if (!reqAuthData) {
+      throw new AuthError("Unauthorized");
+    }
 
-    const [id, password] = reqAuthData.replace(/\s+/g, "").split(":");
+    const [id, password] = reqAuthData?.replace(/\s+/g, "")?.split(":") ?? [
+      "id",
+      "password",
+    ];
 
     const admin = authData.find(
       (admin: any) => admin.id === id && admin.password === password

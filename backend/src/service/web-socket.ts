@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request } from "express";
 import { WebSocketServer, WebSocket } from "ws";
 import { RailRobotType } from "@model/railRobot";
 import { accidentService, railRobotService } from "@service/index";
 import { authService } from "@service/index";
-import { getIP } from "@tools/getIp";
+import { logger } from "@utils/index";
 
 // WebSocket 서버 설정
 const webSoketServer = new WebSocketServer({ noServer: true });
@@ -36,20 +36,12 @@ export class WebSocketServ {
         if (!authService.isAuthentic(req)) {
           ws.send("Unauthorized");
           ws.close();
-          console.log(
-            `${getIP(req)} - - [${new Date()}] "Websocket unauthorized - ${
-              clients.length
-            } clients" `
-          );
+          logger.log("Unauthorized WebSocket connection", req);
           return;
         }
 
         clients.push(ws);
-        console.log(
-          `${getIP(req)} - - [${new Date()}] "WebSocket connection - ${
-            clients.length
-          } clients."`
-        );
+        logger.log(`WebSocket connected - ${clients.length} clients.`, req);
 
         ws.on("close", () => {
           // 연결이 종료되면 클라이언트 목록에서 제거
@@ -58,10 +50,9 @@ export class WebSocketServ {
           if (index !== -1) {
             clients.splice(index, 1);
           }
-          console.log(
-            `${getIP(req)} - - [${new Date()}] "WebSocket closed - ${
-              clients.length
-            } clients."`
+          logger.log(
+            `WebSocket disconnected - ${clients.length} clients.`,
+            req
           );
         });
 
@@ -107,7 +98,7 @@ export class WebSocketServ {
         }
       });
 
-      console.log(`Broadcasted data to ${clients.length} clients.`);
+      logger.log(`Broadcasted data to ${clients.length} clients.`);
     } catch (error) {
       console.error(error);
     }

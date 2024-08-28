@@ -3,6 +3,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { RailRobotType } from "@model/railRobot";
 import { accidentService, railRobotService } from "@service/index";
 import { authService } from "@service/index";
+import { getIP } from "@tools/getIp";
 
 // WebSocket 서버 설정
 const webSoketServer = new WebSocketServer({ noServer: true });
@@ -18,11 +19,24 @@ export class WebSocketServ {
         if (!authService.isAuthentic(req)) {
           ws.send("Unauthorized");
           ws.close();
+          console.log(
+            `${getIP(
+              req
+            )} - - [${new Date()}] "New WebSocket connection established. But unauthorized" - "${
+              req.headers["user-agent"]
+            }"`
+          );
           return;
         }
 
         clients.push(ws);
-        console.log("New WebSocket connection established.");
+        console.log(
+          `${getIP(
+            req
+          )} - - [${new Date()}] "New WebSocket connection established." - "${
+            req.headers["user-agent"]
+          }"`
+        );
 
         ws.on("close", () => {
           // 연결이 종료되면 클라이언트 목록에서 제거
@@ -31,7 +45,13 @@ export class WebSocketServ {
           if (index !== -1) {
             clients.splice(index, 1);
           }
-          console.log("WebSocket connection closed.");
+          console.log(
+            `${getIP(
+              req
+            )} - - [${new Date()}] "WebSocket connection closed." - "${
+              req.headers["user-agent"]
+            }"`
+          );
         });
       });
     } catch (error) {

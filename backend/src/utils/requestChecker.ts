@@ -20,7 +20,7 @@ export class RequestChecker {
     //   throw new BadRequestError("Invalid request");
     // }
 
-    if (!req.body || typeof req.body !== "object") {
+    if (!req.body) {
       throw new BadRequestError("Invalid request: body not found");
     }
 

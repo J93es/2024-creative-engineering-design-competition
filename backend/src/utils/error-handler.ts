@@ -1,80 +1,93 @@
 import { AssertionError } from "assert";
 import { MongooseError } from "mongoose";
 import { AuthError, BadRequestError } from "@model/interface/error";
-import { isProduction } from "@config/index";
+import { logger } from "@utils/index";
 
 export class ErrorHandler {
-  handleNotFound(req: any, res: any, next: any) {
+  handleNotFound = (req: any, res: any, next: any) => {
     if (res.headersSent) {
       return next();
     }
-    console.error("Not Found");
+    logger.error("Not Found", "Not Found", req);
     res.status(404).json({
       type: "NotFoundError",
       msg: "Not Found",
     });
-  }
+  };
 
-  handleBadRequestError(error: any, req: any, res: any, next: any) {
+  handleSyntaxError = (error: any, req: any, res: any, next: any) => {
+    if (error instanceof SyntaxError) {
+      logger.error("SyntaxError", error.message, req);
+      res.status(400).json({
+        type: "SyntaxError",
+        msg: error.message,
+      });
+      return;
+    }
+
+    next(error);
+  };
+
+  handleBadRequestError = (error: any, req: any, res: any, next: any) => {
     if (error instanceof BadRequestError) {
-      console.error(error);
+      logger.error("BadRequestError", error.message, req);
       res.status(400).json({
         type: "BadRequestError",
-        msg: isProduction ? "BadRequestError" : error.message,
+        msg: error.message,
       });
       return;
     }
     next(error);
-  }
+  };
 
-  handleAssertionError(error: any, req: any, res: any, next: any) {
+  handleAssertionError = (error: any, req: any, res: any, next: any) => {
     if (error instanceof AssertionError) {
-      console.error(error);
+      logger.error("AssertionError", error.message, req);
       res.status(400).json({
         type: "AssertionError",
-        msg: isProduction ? "AssertionError" : error.message,
+        msg: error.message,
       });
       return;
     }
     next(error);
-  }
+  };
 
-  handleDatabaseError(error: any, req: any, res: any, next: any) {
+  handleDatabaseError = (error: any, req: any, res: any, next: any) => {
     if (error instanceof MongooseError) {
-      console.error(error);
+      logger.error("MongooseError", error.message, req);
       res.status(503).json({
         type: "MongooseError",
-        msg: isProduction ? "MongooseError" : error.message,
+        msg: error.message,
       });
       return;
     }
     next(error);
-  }
+  };
 
-  handleAuthError(error: any, req: any, res: any, next: any) {
+  handleAuthError = (error: any, req: any, res: any, next: any) => {
     if (error instanceof AuthError) {
-      console.error(error);
+      logger.error("AuthError", error.message, req);
       res.status(401).json({
         type: "AuthError",
-        msg: isProduction ? "AuthError" : error.message,
+        msg: error.message,
       });
       return;
     }
     next(error);
-  }
+  };
 
-  handleError(error: any, req: any, res: any, next: any) {
+  handleError = (error: any, req: any, res: any, next: any) => {
     try {
-      res.locals.message = error.toString();
-      res.locals.error = isProduction ? {} : error;
+      res.locals.message = `${error}`;
+      res.locals.error = error;
 
-      console.error(error);
+      logger.error("InternalServerError", error.message, req);
       res.status(500).json({
         type: "InternalServerError",
-        msg: isProduction ? "Internal Server Error" : error.toString(),
+        msg: `${error.message}`,
       });
     } catch (err) {
       res.end();
     }
-  }
+  };
 }

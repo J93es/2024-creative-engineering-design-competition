@@ -42,4 +42,19 @@ export class Logger {
       )}] "${head}" - ${message}`
     );
   };
+
+  error = (head: string, message: string, req?: Request) => {
+    if (!req) {
+      console.error(
+        `[${this.formatDateToCustomString(new Date())}] - ${message}`
+      );
+      return;
+    }
+
+    console.error(
+      `${getIP(req)} - - [${this.formatDateToCustomString(
+        new Date()
+      )}] "${head}" - ${message}`
+    );
+  };
 }

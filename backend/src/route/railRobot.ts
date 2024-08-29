@@ -24,7 +24,6 @@ router.get(
   "/each",
   wrapAsyncController(
     async (req: Request, res: Response, next: NextFunction) => {
-      console.log(req.body.id);
       const data = await railRobotService.getRobot(req.body.id);
       sendSuccessResponse(res, data);
       next();

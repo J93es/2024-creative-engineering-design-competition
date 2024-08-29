@@ -57,4 +57,8 @@ export class Logger {
       )}] "${head}" - ${message}`
     );
   };
+
+  info = (head: string, message: string) => {
+    console.info(`"${head}" - ${message}`);
+  };
 }

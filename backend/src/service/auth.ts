@@ -4,6 +4,7 @@ import { AuthType } from "@model/interface/auth";
 import { AuthService } from "@core/service/auth";
 import { AuthError } from "@model/interface/error";
 import url from "url";
+import { logger } from "@utils/index";
 
 export class AuthServ implements AuthService {
   checkAuthentic = (req: Request, useQueryOption: boolean = false): void => {
@@ -31,6 +32,7 @@ export class AuthServ implements AuthService {
       });
 
       if (queryFoundAdmin) {
+        logger.log("ID", queryId, req);
         return;
       }
     }
@@ -59,6 +61,7 @@ export class AuthServ implements AuthService {
     });
 
     if (headerFoundAdmin) {
+      logger.log("ID", headersId, req);
       return;
     }
 

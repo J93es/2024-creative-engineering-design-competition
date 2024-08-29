@@ -15,7 +15,7 @@ export class RailRobotServ implements RailRobotService {
     railRobots: RailRobotType[]
   ): RailRobotType[] {
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError("RailRobot is not exist");
+      throw new BadRequestError("No RailRobot data in the database");
     }
 
     railRobots.sort(function (a, b) {
@@ -44,7 +44,7 @@ export class RailRobotServ implements RailRobotService {
     }
 
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError("RailRobot is not exist");
+      throw new BadRequestError("No RailRobot data in the database");
     }
 
     railRobots = this.sortRailRobotsByCurrentLocation(railRobots);
@@ -88,7 +88,7 @@ export class RailRobotServ implements RailRobotService {
 
     const parseResult = getRobotSchema.safeParse({ id: id });
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: id is invalid");
+      throw new BadRequestError("id is invalid");
     }
 
     return await railRobotRepository.read(id);
@@ -102,7 +102,7 @@ export class RailRobotServ implements RailRobotService {
 
     const parseResult = addRobotSchema.safeParse(robot);
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: id, currentLocation is invalid");
+      throw new BadRequestError("id, currentLocation is invalid");
     }
 
     const createdRobot = await railRobotRepository.create(robot);
@@ -117,7 +117,7 @@ export class RailRobotServ implements RailRobotService {
 
     const parseResult = deleteRobotSchema.safeParse({ id: id });
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: id is invalid");
+      throw new BadRequestError("id is invalid");
     }
 
     await railRobotRepository.delete(id);
@@ -127,7 +127,7 @@ export class RailRobotServ implements RailRobotService {
   async startPatrol(): Promise<void> {
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError(`RailRobot is not exist`);
+      throw new BadRequestError(`No RailRobot data in the database`);
     }
 
     await this.updatePatrolLocation(railRobots, true);
@@ -142,12 +142,12 @@ export class RailRobotServ implements RailRobotService {
       targetLocation: targetLocation,
     });
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: targetLocation is invalid");
+      throw new BadRequestError("targetLocation is invalid");
     }
 
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError(`RailRobot is not exist`);
+      throw new BadRequestError(`No RailRobot data in the database`);
     }
 
     for (const railRobot of railRobots) {
@@ -190,12 +190,12 @@ export class RailRobotServ implements RailRobotService {
       accidentLocation: accidentLocation,
     });
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: accidentLocation is invalid");
+      throw new BadRequestError("accidentLocation is invalid");
     }
 
     let railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError(`RailRobot is not exist`);
+      throw new BadRequestError(`No RailRobot data in the database`);
     }
 
     railRobots = this.sortRailRobotsByCurrentLocation(railRobots);
@@ -229,7 +229,7 @@ export class RailRobotServ implements RailRobotService {
 
     const parseResult = stopSchema.safeParse({ id: id });
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: id is invalid");
+      throw new BadRequestError("id is invalid");
     }
 
     return await railRobotRepository.update({
@@ -252,7 +252,7 @@ export class RailRobotServ implements RailRobotService {
       currentLocation: currentLocation,
     });
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data: id, currentLocation is invalid");
+      throw new BadRequestError("id, currentLocation is invalid");
     }
 
     return await railRobotRepository.update({

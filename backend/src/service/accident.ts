@@ -31,7 +31,7 @@ export class AccidentServ implements AccidentService {
 
   async report(data: AccidentType): Promise<AccidentType> {
     if (await this.isExist()) {
-      throw new BadRequestError("Current Accident is already exist");
+      throw new BadRequestError("Accident data already in the database");
     }
 
     const reportSchema = z.object({
@@ -41,7 +41,7 @@ export class AccidentServ implements AccidentService {
 
     const parseResult = reportSchema.safeParse(data);
     if (!parseResult.success) {
-      throw new BadRequestError("Invalid data");
+      throw new BadRequestError("location, discoverorRobotId is invalid");
     }
 
     const accidentId = idGenerator.generateId();
@@ -57,7 +57,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident) {
-      throw new BadRequestError("Accident is not exist");
+      throw new BadRequestError("No Accident data in the database");
     }
 
     return await accidentRepository.update({
@@ -70,7 +70,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident) {
-      throw new BadRequestError("Accident is not exist");
+      throw new BadRequestError("No Accident data in the database");
     }
 
     return await accidentRepository.update({
@@ -83,7 +83,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident) {
-      throw new BadRequestError("Accident is not exist");
+      throw new BadRequestError("No Accident data in the database");
     }
 
     return await accidentRepository.update({

@@ -10,20 +10,20 @@ export class AuthServ implements AuthService {
     if (useQueryOption) {
       const queryAuthData = url.parse(req.url, true).query["cedc-auth"];
       if (!queryAuthData || typeof queryAuthData !== "string") {
-        throw new AuthError("Unauthorized: id, password is needed");
+        throw new AuthError("id, password is needed");
       }
 
       const [queryId, queryPassword] = queryAuthData
         ?.replace(/\s+/g, "")
         ?.split(":");
       if (!queryId && !queryPassword) {
-        throw new AuthError("Unauthorized: id, password is needed");
+        throw new AuthError("id, password is needed");
       }
       if (!queryId) {
-        throw new AuthError("Unauthorized: id is needed");
+        throw new AuthError("id is needed");
       }
       if (!queryPassword) {
-        throw new AuthError("Unauthorized: password is needed");
+        throw new AuthError("password is needed");
       }
 
       const queryFoundAdmin = authData.find((admin: any) => {
@@ -37,7 +37,7 @@ export class AuthServ implements AuthService {
 
     const headersAuthData = req.headers["cedc-auth"];
     if (!headersAuthData || typeof headersAuthData !== "string") {
-      throw new AuthError("Unauthorized: Auth data not found");
+      throw new AuthError("Auth data not found");
     }
 
     const [headersId, headersPassword] = headersAuthData
@@ -45,13 +45,13 @@ export class AuthServ implements AuthService {
       ?.split(":");
 
     if (!headersId && !headersPassword) {
-      throw new AuthError("Unauthorized: id, password is needed");
+      throw new AuthError("id, password is needed");
     }
     if (!headersId) {
-      throw new AuthError("Unauthorized: id is needed");
+      throw new AuthError("id is needed");
     }
     if (!headersPassword) {
-      throw new AuthError("Unauthorized: password is needed");
+      throw new AuthError("password is needed");
     }
 
     const headerFoundAdmin = authData.find((admin: any) => {
@@ -62,7 +62,7 @@ export class AuthServ implements AuthService {
       return;
     }
 
-    throw new AuthError("Unauthorized: id, password is invalid");
+    throw new AuthError("id, password is invalid");
   };
 
   isAuthentic = (req: Request, useQueryOption?: boolean): boolean => {

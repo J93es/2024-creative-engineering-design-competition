@@ -44,7 +44,7 @@ if (isProduction) {
   app.use(logger("combined"));
 
   logger.token("client-info", (req: Request, res: Response) => {
-    const authData = `${req.headers.cedc_auth}`;
+    const authData = `${req.headers.cedc_auth}:11`;
     return authData;
   });
   app.use(logger(":client-info"));

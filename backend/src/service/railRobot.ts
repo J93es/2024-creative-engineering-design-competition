@@ -6,12 +6,16 @@ import {
 } from "@model/railRobot";
 import { railRobotRepository } from "@repository/index";
 
+import { BadRequestError } from "@model/interface/error";
+
+import { z } from "zod";
+
 export class RailRobotServ implements RailRobotService {
   private sortRailRobotsByCurrentLocation(
     railRobots: RailRobotType[]
   ): RailRobotType[] {
     if (!railRobots || railRobots.length === 0) {
-      throw new Error(`RailRobot is not exist`);
+      throw new BadRequestError("RailRobot is not exist");
     }
 
     railRobots.sort(function (a, b) {
@@ -40,7 +44,7 @@ export class RailRobotServ implements RailRobotService {
     }
 
     if (!railRobots || railRobots.length === 0) {
-      throw new Error(`RailRobot is not exist`);
+      throw new BadRequestError("RailRobot is not exist");
     }
 
     railRobots = this.sortRailRobotsByCurrentLocation(railRobots);
@@ -78,16 +82,44 @@ export class RailRobotServ implements RailRobotService {
   }
 
   async getRobot(id: string): Promise<RailRobotType> {
+    const getRobotSchema = z.object({
+      id: z.string(),
+    });
+
+    const parseResult = getRobotSchema.safeParse({ id: id });
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: id is invalid");
+    }
+
     return await railRobotRepository.read(id);
   }
 
   async addRobot(robot: RailRobotType): Promise<RailRobotType> {
+    const addRobotSchema = z.object({
+      id: z.string(),
+      currentLocation: z.number(),
+    });
+
+    const parseResult = addRobotSchema.safeParse(robot);
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: id, currentLocation is invalid");
+    }
+
     const createdRobot = await railRobotRepository.create(robot);
     await this.updatePatrolLocation();
     return this.getRobot(createdRobot.id);
   }
 
   async deleteRobot(id: string): Promise<void> {
+    const deleteRobotSchema = z.object({
+      id: z.string(),
+    });
+
+    const parseResult = deleteRobotSchema.safeParse({ id: id });
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: id is invalid");
+    }
+
     await railRobotRepository.delete(id);
     await this.updatePatrolLocation();
   }
@@ -95,16 +127,27 @@ export class RailRobotServ implements RailRobotService {
   async startPatrol(): Promise<void> {
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new Error(`RailRobot is not exist`);
+      throw new BadRequestError(`RailRobot is not exist`);
     }
 
     await this.updatePatrolLocation(railRobots, true);
   }
 
   async moveToTargetLocation(targetLocation: number): Promise<void> {
+    const moveToTargetLocationSchema = z.object({
+      targetLocation: z.number(),
+    });
+
+    const parseResult = moveToTargetLocationSchema.safeParse({
+      targetLocation: targetLocation,
+    });
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: targetLocation is invalid");
+    }
+
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new Error(`RailRobot is not exist`);
+      throw new BadRequestError(`RailRobot is not exist`);
     }
 
     for (const railRobot of railRobots) {
@@ -139,9 +182,20 @@ export class RailRobotServ implements RailRobotService {
   }
 
   async startAlarm(accidentLocation: number): Promise<void> {
+    const startAlarmSchema = z.object({
+      accidentLocation: z.number(),
+    });
+
+    const parseResult = startAlarmSchema.safeParse({
+      accidentLocation: accidentLocation,
+    });
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: accidentLocation is invalid");
+    }
+
     let railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new Error(`RailRobot is not exist`);
+      throw new BadRequestError(`RailRobot is not exist`);
     }
 
     railRobots = this.sortRailRobotsByCurrentLocation(railRobots);
@@ -169,6 +223,15 @@ export class RailRobotServ implements RailRobotService {
   }
 
   async stop(id: string): Promise<RailRobotType> {
+    const stopSchema = z.object({
+      id: z.string(),
+    });
+
+    const parseResult = stopSchema.safeParse({ id: id });
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: id is invalid");
+    }
+
     return await railRobotRepository.update({
       id: id,
       command: RailRobotCommand.STOP,
@@ -179,6 +242,19 @@ export class RailRobotServ implements RailRobotService {
     id: string,
     currentLocation: number
   ): Promise<RailRobotType> {
+    const updateCurrentLocationSchema = z.object({
+      id: z.string(),
+      currentLocation: z.number(),
+    });
+
+    const parseResult = updateCurrentLocationSchema.safeParse({
+      id: id,
+      currentLocation: currentLocation,
+    });
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data: id, currentLocation is invalid");
+    }
+
     return await railRobotRepository.update({
       id: id,
       currentLocation: currentLocation,

@@ -4,6 +4,12 @@ import { accidentRepository } from "@repository/index";
 
 import { railRobotService } from "@service/index";
 
+import { BadRequestError } from "@model/interface/error";
+
+import { idGenerator } from "@utils/index";
+
+import { z } from "zod";
+
 export class AccidentServ implements AccidentService {
   async isExist(): Promise<boolean> {
     const [detectedAccident, alarmingAccident] = await Promise.all([
@@ -25,19 +31,23 @@ export class AccidentServ implements AccidentService {
 
   async report(data: AccidentType): Promise<AccidentType> {
     if (await this.isExist()) {
-      throw new Error("Current Accident is already exist");
+      throw new BadRequestError("Current Accident is already exist");
     }
 
-    if (!data.location) {
-      throw new Error("location is required");
+    const reportSchema = z.object({
+      location: z.number(),
+      discoverorRobotId: z.string(),
+    });
+
+    const parseResult = reportSchema.safeParse(data);
+    if (!parseResult.success) {
+      throw new BadRequestError("Invalid data");
     }
 
-    if (!data.discoverorRobotId) {
-      throw new Error("discoverorRobotId is required");
-    }
+    const accidentId = idGenerator.generateId();
 
     const [accident, railRobot] = await Promise.all([
-      accidentRepository.create(data),
+      accidentRepository.create({ ...data, id: accidentId }),
       railRobotService.stop(data.discoverorRobotId),
     ]);
     return accident;
@@ -47,7 +57,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident) {
-      throw new Error("Accident is not exist");
+      throw new BadRequestError("Accident is not exist");
     }
 
     return await accidentRepository.update({
@@ -60,7 +70,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident) {
-      throw new Error("Accident is not exist");
+      throw new BadRequestError("Accident is not exist");
     }
 
     return await accidentRepository.update({
@@ -73,7 +83,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident) {
-      throw new Error("Accident is not exist");
+      throw new BadRequestError("Accident is not exist");
     }
 
     return await accidentRepository.update({

@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
+import { sendSuccessResponse } from "@tools/response";
 
 import { railRobotService, webSoketService } from "@service/index";
 
@@ -24,6 +24,7 @@ router.get(
   "/each",
   wrapAsyncController(
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log(req.body.id);
       const data = await railRobotService.getRobot(req.body.id);
       sendSuccessResponse(res, data);
       next();

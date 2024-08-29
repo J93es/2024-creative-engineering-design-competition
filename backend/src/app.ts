@@ -19,23 +19,17 @@ import adminRouter from "@route/admin";
 
 import { webSoketService, authService } from "@service/index";
 import { uri, PORT, isProduction } from "@config/index";
-import { rateLimiter, corsOptions, errorHandler } from "@utils/index";
+import {
+  rateLimiter,
+  corsOptions,
+  errorHandler,
+  requestChecker,
+} from "@utils/index";
 
 const app: Application = express();
 app.set("trust proxy", "loopback, linklocal, uniquelocal");
 app.set("port", PORT || 8000);
 app.set("view engine", "ejs");
-
-if (isProduction) {
-  app.use(logger("combined"));
-
-  logger.token("client-info", (req: Request, res: Response) => {
-    return req.headers.cedc_id as string;
-  });
-  app.use(logger(":client-info"));
-} else {
-  app.use(logger("dev"));
-}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,6 +37,20 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(requestChecker.checkMiddleware);
+
+if (isProduction) {
+  app.use(logger("combined"));
+
+  logger.token("client-info", (req: Request, res: Response) => {
+    const authData = `${req.headers.cedc_auth}`;
+    return authData;
+  });
+  app.use(logger(":client-info"));
+} else {
+  app.use(logger("dev"));
+}
 
 app.use(rateLimiter.makeLimit(1, 6000));
 
@@ -54,9 +62,11 @@ app.use("/alarm", alarmRouter);
 app.use("/admin", adminRouter);
 app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
+app.use("ws-subscribe", webSoketService.subscribe);
 
 app.use(errorHandler.handleNotFound);
 app.use(errorHandler.handleAuthError);
+app.use(errorHandler.handleBadRequestError);
 app.use(errorHandler.handleAssertionError);
 app.use(errorHandler.handleDatabaseError);
 app.use(errorHandler.handleError);

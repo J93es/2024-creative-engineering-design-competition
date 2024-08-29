@@ -83,11 +83,9 @@ Authentication information needs to be added to the headers or query.
 }
 ```
 
-#### Query
+#### Query /ws-subscribe?cdec-auth=(your-own-id):(your-own-password)
 
 Only permitted on WebSocket. Please enter your ID and password in the parentheses.
-
-- /ws-subscribe?cdec-auth=(your-own-id):(your-own-password)
 
 ## Rate Limiter
 
@@ -106,6 +104,8 @@ If more than 6000 requests occur per minute, the rate limiter will be triggered.
 When data is changed, server emit data.
 
 ### /ws-subscribe
+
+#### Message
 
 ```json
 {

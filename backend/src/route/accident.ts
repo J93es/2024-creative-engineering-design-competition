@@ -1,8 +1,8 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
+import { sendSuccessResponse } from "@tools/response";
 
-import { idGenerator, wrapAsyncController } from "@utils/index";
+import { wrapAsyncController } from "@utils/index";
 
 import { accidentService, webSoketService } from "@service/index";
 
@@ -28,11 +28,7 @@ router.post(
   "/",
   wrapAsyncController(
     async (req: Request, res: Response, next: NextFunction) => {
-      const accidentId = idGenerator.generateId();
-      const data = await accidentService.report({
-        ...req.body,
-        id: accidentId,
-      });
+      const data = await accidentService.report(req.body);
       sendSuccessResponse(res, data);
       webSoketService.broadcast();
       next();

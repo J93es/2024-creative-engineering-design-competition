@@ -47,18 +47,18 @@ router.delete(
         suAccidentService.reset(),
         suRailRobotService.reset(),
       ]);
-      await Promise.all([
-        railRobotService.addRobot({
-          id: "0",
-          command: RailRobotCommand.STOP,
-          currentLocation: 0,
-        }),
-        railRobotService.addRobot({
-          id: "1",
-          command: RailRobotCommand.STOP,
-          currentLocation: 10,
-        }),
-      ]);
+      await railRobotService.addRobot({
+        id: "0",
+        command: RailRobotCommand.STOP,
+        currentLocation: 0,
+        targetLocation: 5,
+      });
+      await railRobotService.addRobot({
+        id: "1",
+        command: RailRobotCommand.STOP,
+        currentLocation: 10,
+        targetLocation: 15,
+      });
       sendSuccessResponse(res, { message: "Reseted successfully" });
       webSoketService.broadcast();
       next();

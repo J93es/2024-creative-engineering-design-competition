@@ -1,6 +1,6 @@
 import { AssertionError } from "assert";
 import { MongooseError } from "mongoose";
-import { AuthError } from "@model/interface/authError";
+import { AuthError, BadRequestError } from "@model/interface/error";
 import { isProduction } from "@config/index";
 
 export class ErrorHandler {
@@ -13,6 +13,18 @@ export class ErrorHandler {
       type: "NotFoundError",
       msg: "Not Found",
     });
+  }
+
+  handleBadRequestError(error: any, req: any, res: any, next: any) {
+    if (error instanceof BadRequestError) {
+      console.error(error);
+      res.status(400).json({
+        type: "BadRequestError",
+        msg: isProduction ? "BadRequestError" : error.message,
+      });
+      return;
+    }
+    next(error);
   }
 
   handleAssertionError(error: any, req: any, res: any, next: any) {

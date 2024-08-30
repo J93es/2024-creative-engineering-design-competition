@@ -4,7 +4,7 @@ import { accidentRepository } from "@repository/index";
 
 import { railRobotService } from "@service/index";
 
-import { BadRequestError } from "@model/interface/error";
+import { BadRequestError, ResourceNotFoundError } from "@model/interface/error";
 
 import { idGenerator } from "@utils/index";
 
@@ -57,7 +57,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident.id) {
-      throw new BadRequestError("No Accident data in the database");
+      throw new ResourceNotFoundError("No Accident data in the database");
     }
 
     return await accidentRepository.update({
@@ -70,7 +70,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident.id) {
-      throw new BadRequestError("No Accident data in the database");
+      throw new ResourceNotFoundError("No Accident data in the database");
     }
 
     return await accidentRepository.update({
@@ -83,7 +83,7 @@ export class AccidentServ implements AccidentService {
     const currentAccident = await this.get();
 
     if (!currentAccident.id) {
-      throw new BadRequestError("No Accident data in the database");
+      throw new ResourceNotFoundError("No Accident data in the database");
     }
 
     return await accidentRepository.update({

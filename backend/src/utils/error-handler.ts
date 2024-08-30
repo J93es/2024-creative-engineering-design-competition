@@ -1,18 +1,35 @@
 import { AssertionError } from "assert";
 import { MongooseError } from "mongoose";
-import { AuthError, BadRequestError } from "@model/interface/error";
+import {
+  AuthError,
+  BadRequestError,
+  ResourceNotFoundError,
+} from "@model/interface/error";
 import { logger } from "@utils/index";
 
 export class ErrorHandler {
-  handleNotFound = (req: any, res: any, next: any) => {
+  handleRouterNotFound = (req: any, res: any, next: any) => {
     if (res.headersSent) {
       return next();
     }
-    logger.error("Not Found", "Not Found", req);
+    logger.error("RouterNotFound", "RouterNotFound", req);
     res.status(404).json({
-      type: "NotFoundError",
-      msg: "Not Found",
+      type: "RouterNotFoundError",
+      msg: "Router Not Found",
     });
+  };
+
+  handleResourceNotFound = (error: any, req: any, res: any, next: any) => {
+    if (error instanceof ResourceNotFoundError) {
+      logger.error("ResourceNotFoundError", error.message, req);
+      res.status(404).json({
+        type: "ResourceNotFoundError",
+        msg: error.message,
+      });
+      return;
+    }
+
+    next(error);
   };
 
   handleSyntaxError = (error: any, req: any, res: any, next: any) => {

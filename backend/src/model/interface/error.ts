@@ -6,6 +6,14 @@ export class AuthError implements Error {
   }
 }
 
+export class ResourceNotFoundError implements Error {
+  name: string = "ResourceNotFoundError";
+
+  constructor(public message: string) {
+    this.message = message ?? "Resource Not Found Error";
+  }
+}
+
 export class AssertionError implements Error {
   name: string = "AssertionError";
 

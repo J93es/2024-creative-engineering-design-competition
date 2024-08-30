@@ -58,7 +58,8 @@ app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
 app.use("ws-subscribe", webSoketService.subscribe);
 
-app.use(errorHandler.handleNotFound);
+app.use(errorHandler.handleRouterNotFound);
+app.use(errorHandler.handleResourceNotFound);
 app.use(errorHandler.handleSyntaxError);
 app.use(errorHandler.handleAuthError);
 app.use(errorHandler.handleBadRequestError);

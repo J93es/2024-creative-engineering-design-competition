@@ -6,7 +6,7 @@ import {
 } from "@model/railRobot";
 import { railRobotRepository } from "@repository/index";
 
-import { BadRequestError } from "@model/interface/error";
+import { BadRequestError, ResourceNotFoundError } from "@model/interface/error";
 
 import { alarmRange } from "@config/index";
 
@@ -17,7 +17,7 @@ export class RailRobotServ implements RailRobotService {
     railRobots: RailRobotType[]
   ): RailRobotType[] {
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError("No RailRobot data in the database");
+      throw new ResourceNotFoundError("No RailRobot data in the database");
     }
 
     railRobots.sort(function (a, b) {
@@ -46,7 +46,7 @@ export class RailRobotServ implements RailRobotService {
     }
 
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError("No RailRobot data in the database");
+      throw new ResourceNotFoundError("No RailRobot data in the database");
     }
 
     railRobots = this.sortRailRobotsByCurrentLocation(railRobots);
@@ -130,7 +130,7 @@ export class RailRobotServ implements RailRobotService {
   async startPatrol(): Promise<void> {
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError(`No RailRobot data in the database`);
+      throw new ResourceNotFoundError(`No RailRobot data in the database`);
     }
 
     await this.updatePatrolLocation(railRobots, true);
@@ -154,7 +154,7 @@ export class RailRobotServ implements RailRobotService {
 
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError(`No RailRobot data in the database`);
+      throw new ResourceNotFoundError(`No RailRobot data in the database`);
     }
 
     for (const railRobot of railRobots) {
@@ -201,7 +201,7 @@ export class RailRobotServ implements RailRobotService {
 
     let railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
-      throw new BadRequestError(`No RailRobot data in the database`);
+      throw new ResourceNotFoundError(`No RailRobot data in the database`);
     }
 
     railRobots = this.sortRailRobotsByCurrentLocation(railRobots);

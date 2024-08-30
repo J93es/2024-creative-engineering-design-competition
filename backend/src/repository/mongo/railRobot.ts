@@ -1,6 +1,7 @@
 import RailRobot, { RailRobotType } from "@model/railRobot";
 import { RailRobotRepository } from "@core/repository/railRobot";
 import { RailRobotSchema } from "@repository/mongo/schema/index";
+import { ResourceNotFoundError } from "@model/interface/error";
 
 export class RailRobotMongoRepo implements RailRobotRepository {
   async readAll(): Promise<RailRobotType[]> {
@@ -13,7 +14,7 @@ export class RailRobotMongoRepo implements RailRobotRepository {
       id: id,
     }).lean();
     if (!railRobot) {
-      throw new Error("RailRobot not found");
+      throw new ResourceNotFoundError("RailRobot not found");
     }
 
     return new RailRobot(railRobot);
@@ -32,7 +33,7 @@ export class RailRobotMongoRepo implements RailRobotRepository {
       { new: true }
     );
     if (!railRobot) {
-      throw new Error("RailRobot not found");
+      throw new ResourceNotFoundError("RailRobot not found");
     }
     return new RailRobot(railRobot);
   }
@@ -40,7 +41,7 @@ export class RailRobotMongoRepo implements RailRobotRepository {
   async delete(id: string): Promise<void> {
     const railRobot = await RailRobotSchema.deleteOne({ id: id });
     if (!railRobot.deletedCount) {
-      throw new Error("RailRobot not found");
+      throw new ResourceNotFoundError("RailRobot not found");
     }
   }
 

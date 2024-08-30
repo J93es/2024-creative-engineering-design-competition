@@ -1,6 +1,7 @@
 import Accident, { AccidentType } from "@model/accident";
 import { AccidentRepository } from "@core/repository/accident";
 import { AccidentSchema } from "@repository/mongo/schema/index";
+import { ResourceNotFoundError } from "@model/interface/error";
 
 export class AccidentMongoRepo implements AccidentRepository {
   async readAll(): Promise<AccidentType[]> {
@@ -23,7 +24,7 @@ export class AccidentMongoRepo implements AccidentRepository {
       id: id,
     }).lean();
     if (!accident) {
-      throw new Error("Accident not found");
+      throw new ResourceNotFoundError("Accident not found");
     }
 
     return new Accident(accident);
@@ -42,7 +43,7 @@ export class AccidentMongoRepo implements AccidentRepository {
       { new: true }
     );
     if (!accident) {
-      throw new Error("Accident not found");
+      throw new ResourceNotFoundError("Accident not found");
     }
     return new Accident(accident);
   }
@@ -50,7 +51,7 @@ export class AccidentMongoRepo implements AccidentRepository {
   async delete(id: string): Promise<void> {
     const accident = await AccidentSchema.deleteOne({ id: id });
     if (!accident.deletedCount) {
-      throw new Error("Accident not found");
+      throw new ResourceNotFoundError("Accident not found");
     }
   }
 

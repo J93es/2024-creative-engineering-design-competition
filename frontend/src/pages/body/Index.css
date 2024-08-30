@@ -1,0 +1,10 @@
+.body-wrapper {
+  display: flex;
+  grid-template-columns: 550px 550px;
+  justify-content: center;
+  background-color: #e6ecf0;
+}
+
+.body-row {
+  min-width: 520px;
+}

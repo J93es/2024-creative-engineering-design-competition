@@ -1,0 +1,8 @@
+.header-wrapper {
+  background-color: #229799;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}

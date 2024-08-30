@@ -64,6 +64,7 @@ export class RailRobotServ implements RailRobotService {
             command: RailRobotCommand.PATROL,
             patrolStartLocation: patrolStartLocation,
             patrolEndLocation: patrolEndLocation,
+            targetLocation: patrolStartLocation,
           })
         : railRobotRepository.update({
             ...railRobot,

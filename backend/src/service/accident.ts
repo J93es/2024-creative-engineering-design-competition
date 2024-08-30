@@ -26,7 +26,7 @@ export class AccidentServ implements AccidentService {
       accidentRepository.readByStatus(AccidentStatus.ALARMING),
     ]);
 
-    return detectedAccident[0] || alarmingAccident[0];
+    return detectedAccident[0] || alarmingAccident[0] || {};
   }
 
   async report(data: AccidentType): Promise<AccidentType> {
@@ -56,7 +56,7 @@ export class AccidentServ implements AccidentService {
   async ignore(): Promise<AccidentType> {
     const currentAccident = await this.get();
 
-    if (!currentAccident) {
+    if (!currentAccident.id) {
       throw new BadRequestError("No Accident data in the database");
     }
 
@@ -69,7 +69,7 @@ export class AccidentServ implements AccidentService {
   async startAlarm(): Promise<AccidentType> {
     const currentAccident = await this.get();
 
-    if (!currentAccident) {
+    if (!currentAccident.id) {
       throw new BadRequestError("No Accident data in the database");
     }
 
@@ -82,7 +82,7 @@ export class AccidentServ implements AccidentService {
   async endAlarm(): Promise<AccidentType> {
     const currentAccident = await this.get();
 
-    if (!currentAccident) {
+    if (!currentAccident.id) {
       throw new BadRequestError("No Accident data in the database");
     }
 

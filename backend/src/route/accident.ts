@@ -4,7 +4,11 @@ import { sendSuccessResponse } from "@tools/response";
 
 import { wrapAsyncController } from "@utils/index";
 
-import { accidentService, webSoketService } from "@service/index";
+import {
+  accidentService,
+  webSoketService,
+  railRobotService,
+} from "@service/index";
 
 const router: Router = express.Router();
 
@@ -40,8 +44,11 @@ router.put(
   "/ignore",
   wrapAsyncController(
     async (req: Request, res: Response, next: NextFunction) => {
-      const data = await accidentService.ignore();
-      sendSuccessResponse(res, data);
+      await Promise.all([
+        accidentService.ignore(),
+        railRobotService.startPatrol(),
+      ]);
+      sendSuccessResponse(res, { msg: "Accident ignored" });
       webSoketService.broadcast();
       next();
     }

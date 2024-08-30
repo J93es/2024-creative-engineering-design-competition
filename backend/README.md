@@ -425,10 +425,7 @@ Ignores the current accident.
 
 ```json
 {
-  "id": "ac6e52f2-55ba-4bb3-9dd0-3018a5094bc3",
-  "location": 1,
-  "discoverorRobotId": "1",
-  "status": "1"
+  "msg": "Accident ignored"
 }
 ```
 

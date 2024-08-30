@@ -24,3 +24,5 @@ export const isProduction = process.env.DEVELOPMENT_ENV !== "development";
 export const authData = JSON.parse(
   process.env.AUTH_DATA || '[{"id":"id-example","password":"password-example"}]'
 );
+
+export const alarmRange = 5;

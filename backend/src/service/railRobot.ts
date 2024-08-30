@@ -8,6 +8,8 @@ import { railRobotRepository } from "@repository/index";
 
 import { BadRequestError } from "@model/interface/error";
 
+import { alarmRange } from "@config/index";
+
 import { z } from "zod";
 
 export class RailRobotServ implements RailRobotService {
@@ -142,7 +144,11 @@ export class RailRobotServ implements RailRobotService {
     const parseResult = moveToTargetLocationSchema.safeParse({
       targetLocation: targetLocation,
     });
-    if (!parseResult.success) {
+    if (
+      !parseResult.success ||
+      targetLocation < 0 ||
+      targetLocation > MAX_LOCATION
+    ) {
       throw new BadRequestError("targetLocation is invalid");
     }
 
@@ -171,7 +177,6 @@ export class RailRobotServ implements RailRobotService {
     railRobotCnt: number
   ): number[] {
     const alarmLocation = [];
-    const alarmRange = 5;
 
     for (let index = 0; index < railRobotCnt; index++) {
       const location = accidentLocation - alarmRange * index;

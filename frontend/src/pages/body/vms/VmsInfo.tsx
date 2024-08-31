@@ -1,9 +1,10 @@
 import { vmsController } from "controller/index";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { VmsStatus } from "controller/vms";
-import { SCALE } from "config/app-config";
+import { AccidentContext } from "pages/body/Index";
 
 function VmsInfo() {
+  const accident = useContext(AccidentContext);
   const [isVmsConnected, setIsVmsConnected] = useState(false);
   const [vmsStatus, setVmsStatus] = useState<
     VmsStatus.IDLE | VmsStatus.CAR_CRASH
@@ -32,13 +33,12 @@ function VmsInfo() {
         <h4 className="mb-4">VMS 정보</h4>
         <div>
           <p>VMS 연결 상태: {isVmsConnected ? "연결" : "연결 끊김"}</p>
-          {isVmsConnected ? (
-            <p>
-              {"VMS 송출 메시지: "}
-              {vmsStatus === VmsStatus.IDLE
-                ? "Speed limit 80km/h"
-                : `Accident ${vmsController.getLocation() * SCALE}m`}
-            </p>
+          {isVmsConnected && vmsStatus !== VmsStatus.IDLE ? (
+            <>
+              <p>VMS 송출 메시지</p>
+              <p>accident</p>
+              <p>{accident.location}</p>
+            </>
           ) : null}
         </div>
       </div>

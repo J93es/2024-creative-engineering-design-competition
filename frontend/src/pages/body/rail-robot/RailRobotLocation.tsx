@@ -1,10 +1,11 @@
-import { MAX_LOCATION } from "config/app-config";
+import { MAX_LOCATION, SCALE } from "config/app-config";
 import React from "react";
 import { RailRobotsContext } from "pages/body/Index";
 
 function RailRobotLocation() {
   const railRobots = React.useContext(RailRobotsContext);
-  const maxPx = MAX_LOCATION * 20;
+  const maxPx = 400;
+  const positionTextShowCnt = 10;
   const railRobotPositions: number[] = railRobots.map((railRobot) => {
     return (railRobot.currentLocation * maxPx) / MAX_LOCATION;
   });
@@ -27,7 +28,7 @@ function RailRobotLocation() {
     borderRadius: "50%",
   });
 
-  const linePositionStyle: React.CSSProperties = {
+  const linePositionTextStyle: React.CSSProperties = {
     display: "flex",
     justifyContent: "space-between",
     color: "black",
@@ -37,16 +38,16 @@ function RailRobotLocation() {
   return (
     <div className="card d-inline-flex justify-content-center cur-robot-location-cont mb-4">
       <div className="card-body">
-        <h4 className="mb-4">레일 로봇 위치</h4>
+        <h4 className="mb-4">레일 로봇 위치(km)</h4>
         <div style={lineStyle}>
           {railRobotPositions.map((pos, index) => (
             <div key={index} style={getPositionStyle(pos)} />
           ))}
         </div>
-        <div style={linePositionStyle}>
-          {[...Array(11)].map((_, index) => (
+        <div style={linePositionTextStyle}>
+          {[...Array(positionTextShowCnt + 1)].map((_, index) => (
             <span className="fs-6" key={index}>
-              {Math.floor((maxPx / 20) * index)}
+              {Math.floor((MAX_LOCATION * SCALE * index) / positionTextShowCnt)}
             </span>
           ))}
         </div>

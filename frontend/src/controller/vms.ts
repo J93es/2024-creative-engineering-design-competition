@@ -26,16 +26,25 @@ export class VmsController {
   };
 
   idle = async () => {
+    if (!this.isConnected()) {
+      return;
+    }
     await serialPortController.write("I");
     this.status = VmsStatus.IDLE;
   };
 
   accident = async () => {
+    if (!this.isConnected()) {
+      return;
+    }
     await serialPortController.write("A");
     this.status = VmsStatus.CAR_CRASH;
   };
 
   location = async (location: number) => {
+    if (!this.isConnected()) {
+      return;
+    }
     await serialPortController.write(`/${location}!`);
     this.accidentLocation = location;
   };

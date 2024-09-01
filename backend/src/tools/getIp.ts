@@ -1,10 +1,10 @@
 import { Request } from "express";
 
 export const getIP = (request: Request): string => {
-  return (
-    (request.headers["x-forwarded-for"] as string) ||
-    (request.headers["x-real-ip"] as string) ||
+  const ipData =
+    request.headers["x-real-ip"] ||
+    request.headers["x-forwarded-for"] ||
     request.ip ||
-    "unknown"
-  );
+    "unknown";
+  return `${ipData}`;
 };

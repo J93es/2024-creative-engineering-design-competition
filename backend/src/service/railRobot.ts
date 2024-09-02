@@ -184,7 +184,7 @@ export class RailRobotServ implements RailRobotService {
       alarmLocation.push(location > 0 ? location : 0);
     }
 
-    return alarmLocation;
+    return alarmLocation.reverse();
   }
 
   async startAlarm(accidentLocation: number): Promise<void> {

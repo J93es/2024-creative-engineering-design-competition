@@ -26,3 +26,5 @@ export const authData = JSON.parse(
 );
 
 export const alarmRange = 5;
+
+export const safetyLenght = 2;

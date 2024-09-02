@@ -12,6 +12,8 @@ import { alarmRange } from "@config/index";
 
 import { z } from "zod";
 
+import { safetyLenght } from "@config/index";
+
 export class RailRobotServ implements RailRobotService {
   private sortRailRobotsByCurrentLocation(
     railRobots: RailRobotType[]
@@ -55,10 +57,14 @@ export class RailRobotServ implements RailRobotService {
     const patrolLength = Math.floor(MAX_LOCATION / railRobotCnt);
     const updatePromises = [];
 
-    for (let index = 0; index < railRobots.length; index++) {
+    for (let index = 0; index < railRobotCnt; index++) {
       const railRobot = railRobots[index];
-      const patrolStartLocation = patrolLength * index;
-      const patrolEndLocation = patrolLength * (index + 1);
+      let patrolStartLocation =
+        index === 0 ? 0 : patrolLength * index + safetyLenght;
+      let patrolEndLocation =
+        index === railRobotCnt - 1
+          ? MAX_LOCATION
+          : patrolLength * (index + 1) - safetyLenght;
 
       const updatePromise = cmdUpdateOption
         ? railRobotRepository.update({
@@ -158,13 +164,39 @@ export class RailRobotServ implements RailRobotService {
     }
 
     for (const railRobot of railRobots) {
+      const patrolStartLocation = railRobot.patrolStartLocation ?? 0;
+      const patrolEndLocation = railRobot.patrolEndLocation ?? 0;
       if (
-        (railRobot.patrolStartLocation ?? 0) < targetLocation &&
-        targetLocation <= (railRobot.patrolEndLocation ?? 0)
+        patrolStartLocation <= targetLocation &&
+        targetLocation <= patrolEndLocation
       ) {
         await railRobotRepository.update({
           ...railRobot,
           targetLocation: targetLocation,
+          command: RailRobotCommand.MOVE_TO_TARGET_LOCATION,
+        });
+        break;
+      }
+
+      if (
+        patrolStartLocation - safetyLenght <= targetLocation &&
+        targetLocation <= patrolStartLocation
+      ) {
+        await railRobotRepository.update({
+          ...railRobot,
+          targetLocation: patrolStartLocation,
+          command: RailRobotCommand.MOVE_TO_TARGET_LOCATION,
+        });
+        break;
+      }
+
+      if (
+        patrolEndLocation <= targetLocation &&
+        targetLocation <= patrolEndLocation + safetyLenght
+      ) {
+        await railRobotRepository.update({
+          ...railRobot,
+          targetLocation: patrolEndLocation,
           command: RailRobotCommand.MOVE_TO_TARGET_LOCATION,
         });
         break;
@@ -182,9 +214,20 @@ export class RailRobotServ implements RailRobotService {
       const location = accidentLocation - alarmRange * index;
 
       alarmLocation.push(location > 0 ? location : 0);
+      if (location <= 0) {
+        break;
+      }
     }
 
-    return alarmLocation.reverse();
+    alarmLocation.reverse();
+
+    for (let index = 0; index < railRobotCnt - 1; index++) {
+      if (alarmLocation[index] + 2 * safetyLenght > alarmLocation[index + 1]) {
+        alarmLocation[index + 1] = alarmLocation[index] + 2 * safetyLenght;
+      }
+    }
+
+    return alarmLocation;
   }
 
   async startAlarm(accidentLocation: number): Promise<void> {

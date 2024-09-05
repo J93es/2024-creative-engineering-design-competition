@@ -158,6 +158,8 @@ export class RailRobotServ implements RailRobotService {
       throw new BadRequestError("targetLocation is invalid");
     }
 
+    await this.updatePatrolLocation();
+
     const railRobots = await railRobotRepository.readAll();
     if (!railRobots || railRobots.length === 0) {
       throw new ResourceNotFoundError(`No RailRobot data in the database`);

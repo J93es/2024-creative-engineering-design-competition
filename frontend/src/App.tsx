@@ -33,6 +33,7 @@ function App() {
       setIsSerialSupported(true);
     } else {
       setIsSerialSupported(false);
+      alert("이 페이지는 Chrome 브라우저에서만 사용 가능합니다.");
     }
 
     const func = async () => {
@@ -50,8 +51,8 @@ function App() {
 
   if (!isSerialSupported) {
     return (
-      <div className="App">
-        <div>Serial not supported</div>
+      <div className="App d-flex align-items-center justify-content-center">
+        <h1>이 페이지는 Chrome 브라우저 전용입니다.</h1>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { wsUrl } from "config/app-config";
+import { wsUrl, authId, authPassword } from "config/app-config";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -40,7 +40,9 @@ const useWebSocket = (): UseWebSocketReturn => {
 
   useEffect(() => {
     // WebSocket 연결 생성
-    const socket = new WebSocket(wsUrl);
+    const socket = new WebSocket(
+      `${wsUrl}?cedc-auth=${authId}:${authPassword}`
+    );
     wsRef.current = socket;
 
     // WebSocket 이벤트 처리

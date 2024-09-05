@@ -6,6 +6,7 @@ import {
   vmsController,
 } from "controller/index";
 import { SetAlertDataContext } from "pages/body/Index";
+import { SCALE, serialDelay } from "config/app-config";
 
 function AccidentControl() {
   const setAlertData = useContext(SetAlertDataContext);
@@ -32,7 +33,9 @@ function AccidentControl() {
               vmsController.accident(),
               accidentFetchController.get(authData),
             ]);
-            await vmsController.location(accidentData.location);
+            setTimeout(() => {
+              vmsController.location(accidentData.location * SCALE);
+            }, serialDelay);
             setAlertData({
               message: "알람 시작에 성공했습니다.",
               type: "SUCCESS",

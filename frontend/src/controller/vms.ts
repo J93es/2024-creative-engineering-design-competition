@@ -7,22 +7,21 @@ export enum VmsStatus {
 
 export class VmsController {
   private status: VmsStatus.IDLE | VmsStatus.CAR_CRASH = VmsStatus.IDLE;
-  private isOpened: boolean = false;
   private accidentLocation: number = 0;
 
-  isConnected = () => this.isOpened;
+  isConnected = () => {
+    return serialPortController.isOpened();
+  };
   getStatus = () => this.status;
   getLocation = () => this.accidentLocation;
 
   connect = async () => {
     await serialPortController.open();
     await this.idle();
-    this.isOpened = true;
   };
 
   disconnect = async () => {
     await serialPortController.close();
-    this.isOpened = false;
   };
 
   idle = async () => {
@@ -42,7 +41,7 @@ export class VmsController {
   };
 
   location = async (location: number) => {
-    if (!this.isConnected()) {
+    if (!this.isConnected() || Number.isNaN(location)) {
       return;
     }
     await serialPortController.write(`/${location}!`);

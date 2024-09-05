@@ -6,6 +6,19 @@ export class SerialPortController {
   private reader: any;
   private writer: any;
 
+  isOpened = (): boolean => {
+    if (!this.port) {
+      return false;
+    }
+    if (!this.port.readable) {
+      return false;
+    }
+    if (!this.port.writable) {
+      return false;
+    }
+    return true;
+  };
+
   open = async () => {
     const filters: string[] = [];
     this.port = await (navigator as any).serial.requestPort({
@@ -13,8 +26,8 @@ export class SerialPortController {
     });
     const { usbProductId, usbVendorId } = this.port.getInfo();
     // await this.port.open({ baudRate: 460800 });
-    // await this.port.open({ baudRate: 9600 });
-    await this.port.open({ baudRate: 115200 });
+    await this.port.open({ baudRate: 9600 });
+    // await this.port.open({ baudRate: 115200 });
     console.log(`usb product id: ${usbProductId}`);
     console.log(`usb vender id: ${usbVendorId}`);
   };

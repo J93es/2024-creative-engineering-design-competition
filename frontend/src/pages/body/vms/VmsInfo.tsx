@@ -2,6 +2,7 @@ import { vmsController } from "controller/index";
 import { useContext, useEffect, useState } from "react";
 import { VmsStatus } from "controller/vms";
 import { AccidentContext } from "pages/body/Index";
+import { SCALE } from "config/app-config";
 
 function VmsInfo() {
   const accident = useContext(AccidentContext);
@@ -37,7 +38,7 @@ function VmsInfo() {
             <>
               <p>VMS 송출 메시지</p>
               <p>accident</p>
-              <p>{accident.location}</p>
+              <p>{accident.location * SCALE}</p>
             </>
           ) : null}
         </div>

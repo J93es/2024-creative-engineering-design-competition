@@ -38,7 +38,7 @@ function RailRobotLocation() {
   return (
     <div className="card d-inline-flex justify-content-center cur-robot-location-cont mb-4">
       <div className="card-body">
-        <h4 className="mb-4">레일 로봇 위치(km)</h4>
+        <h4 className="mb-4">레일 로봇 위치(m)</h4>
         <div style={lineStyle}>
           {railRobotPositions.map((pos, index) => (
             <div key={index} style={getPositionStyle(pos)} />

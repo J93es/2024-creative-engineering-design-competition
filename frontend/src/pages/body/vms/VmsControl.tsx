@@ -2,6 +2,7 @@ import { AccidentContext } from "pages/body/Index";
 import { useContext } from "react";
 import { vmsController } from "controller/index";
 import { SetAlertDataContext } from "pages/body/Index";
+import { SCALE, serialDelay } from "config/app-config";
 
 function VmsControl() {
   const setAlertData = useContext(SetAlertDataContext);
@@ -75,7 +76,9 @@ function VmsControl() {
         onClick={async () => {
           try {
             await vmsController.accident();
-            await vmsController.location(accidentData.location);
+            setTimeout(() => {
+              vmsController.location(accidentData.location * SCALE);
+            }, serialDelay);
             setAlertData({
               message: "사고상태 전송에 성공했습니다.",
               type: "SUCCESS",

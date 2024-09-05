@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import { AccidentType, accidentInit } from "module/accident";
 import { RailRobotType } from "module/railRobot";
 
@@ -11,6 +11,8 @@ import RailRobot from "pages/body/rail-robot/Index";
 import AdminControl from "pages/body/admin/AdminControl";
 import Vms from "pages/body/vms/Index";
 import { AlertType } from "module/alert";
+
+import { CedcAuthContext } from "App";
 
 import "pages/body/Index.css";
 
@@ -25,7 +27,8 @@ export const RailRobotsContext: React.Context<RailRobotType[]> = createContext<
 >([]);
 
 function Body() {
-  const { accident, railRobots } = useWebSocket();
+  const cedcAuth = useContext(CedcAuthContext);
+  const { accident, railRobots } = useWebSocket(cedcAuth);
 
   const [alertData, setAlertData] = useState<AlertType>({
     message: "",

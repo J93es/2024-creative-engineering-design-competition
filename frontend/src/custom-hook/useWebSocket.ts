@@ -1,9 +1,10 @@
-import { wsUrl, authId, authPassword } from "config/app-config";
+import { wsUrl } from "config/app-config";
 
 import { useState, useEffect, useRef } from "react";
 
 import { AccidentType, accidentInit } from "module/accident";
 import { RailRobotType } from "module/railRobot";
+import { LoginType } from "module/login";
 
 interface UseWebSocketReturn {
   accident: AccidentType;
@@ -24,14 +25,14 @@ const sortRailRobotsById = (
     if ((a.id ?? 0) < (b.id ?? 0)) {
       return -1;
     }
-    // a must be equal to b
+
     return 0;
   });
 
   return railRobots;
 };
 
-const useWebSocket = (): UseWebSocketReturn => {
+const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
   const [data, setData] = useState<UseWebSocketReturn>({
     accident: accidentInit,
     railRobots: [],
@@ -39,9 +40,17 @@ const useWebSocket = (): UseWebSocketReturn => {
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    // WebSocket 연결 생성
+    if (wsRef.current) {
+      wsRef.current.close();
+    }
+    if (!cedcAuth.adminId || !cedcAuth.password) {
+      console.error("WebSocket 인증 정보가 없습니다.");
+      return;
+    }
+    console.log(cedcAuth.adminId, cedcAuth.password);
+
     const socket = new WebSocket(
-      `${wsUrl}?cedc-auth=${authId}:${authPassword}`
+      `${wsUrl}?cedc-auth=${cedcAuth.adminId}:${cedcAuth.password}`
     );
     wsRef.current = socket;
 
@@ -90,7 +99,7 @@ const useWebSocket = (): UseWebSocketReturn => {
         wsRef.current.close();
       }
     };
-  }, []);
+  }, [cedcAuth]);
 
   return data;
 };

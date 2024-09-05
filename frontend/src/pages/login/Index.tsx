@@ -89,7 +89,7 @@ export default function Login({
               Login
             </button>
           </form>
-          <div>{message}</div>
+          <div className="auth-msg">{message}</div>
         </div>
       </div>
     </div>

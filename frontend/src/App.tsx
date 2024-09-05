@@ -9,11 +9,9 @@ import Body from "pages/body/Index";
 import Login from "pages/login/Index";
 import Header from "pages/header/Index";
 
-import { authId, authPassword } from "config/app-config";
-
 export const CedcAuthContext = createContext<LoginType>({
-  adminId: authId,
-  password: authPassword,
+  adminId: "init",
+  password: "init",
 });
 
 export const SetIsAuthenticatedContext = createContext<
@@ -22,8 +20,8 @@ export const SetIsAuthenticatedContext = createContext<
 
 function App() {
   const [cedcAuth, setCedcAuth] = useState<LoginType>({
-    adminId: authId,
-    password: authPassword,
+    adminId: "init",
+    password: "init",
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

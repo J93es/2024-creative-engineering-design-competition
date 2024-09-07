@@ -29,18 +29,21 @@ export class CustomLogger {
   };
 
   makeSimpleMsg = (head: string, message: string) => {
-    return `"${head}" - ${message}`;
+    return `"${head}"|${message}`;
   };
 
   private makeMsg = (head: string, message: string, req?: Request) => {
     if (!req)
       return `[${this.formatDateToCustomString(
         new Date()
-      )}] "${head}" - ${message}`;
+      )}] ${this.makeSimpleMsg(head, message)}`;
 
     return `${requestUtils.getId(req)} ${requestUtils.getIp(
       req
-    )} - - [${this.formatDateToCustomString(new Date())}] "${head}"|${message}`;
+    )} - - [${this.formatDateToCustomString(new Date())}] ${this.makeSimpleMsg(
+      head,
+      message
+    )}`;
   };
 
   addLogMsg = (req: Request, logMsg: string) => {

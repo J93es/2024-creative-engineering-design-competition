@@ -53,7 +53,7 @@ logger.token("log-msg", (req: Request) => {
 
 app.use(
   logger(
-    ":request-id :remote-addr - :remote-user [:date[clf]] :method :url HTTP/:http-version :status :res[content-length] - :response-time ms :log-msg"
+    ":remote-addr - :remote-user [:date[clf]] :method :url HTTP/:http-version :status :res[content-length] - :response-time ms :request-id :log-msg"
   )
 );
 

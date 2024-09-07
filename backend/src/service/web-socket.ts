@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { WebSocketServer, WebSocket } from "ws";
-import { RailRobotType } from "@model/railRobot";
+import { RailRobotType } from "@model/rail-robot";
 import { accidentService, railRobotService } from "@service/index";
 import { authService } from "@service/index";
 import { customLogger } from "@utils/index";

@@ -1,8 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse } from "@tools/response";
-
-import { wrapAsyncController } from "@utils/index";
+import { wrapAsyncController, responseUtils } from "@utils/index";
 
 import {
   accidentService,
@@ -19,10 +17,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction) => {
       const data = await accidentService.get();
       if (!data) {
-        sendSuccessResponse(res, {});
+        responseUtils.sendSuccess(res, {});
         return;
       }
-      sendSuccessResponse(res, data);
+      responseUtils.sendSuccess(res, data);
       next();
     }
   )
@@ -33,7 +31,7 @@ router.post(
   wrapAsyncController(
     async (req: Request, res: Response, next: NextFunction) => {
       const data = await accidentService.report(req.body);
-      sendSuccessResponse(res, data);
+      responseUtils.sendSuccess(res, data);
       webSoketService.broadcast();
       next();
     }
@@ -48,7 +46,7 @@ router.put(
         accidentService.ignore(),
         railRobotService.startPatrol(),
       ]);
-      sendSuccessResponse(res, { msg: "Accident ignored" });
+      responseUtils.sendSuccess(res, { msg: "Accident ignored" });
       webSoketService.broadcast();
       next();
     }

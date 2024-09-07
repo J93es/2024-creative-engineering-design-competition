@@ -10,15 +10,17 @@ import path from "path";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import suRailRobotRouter from "@route/su-railRobot";
-import suAccidentRouter from "@route/su-accident";
-import railRobotRouter from "@route/railRobot";
-import accidentRouter from "@route/accident";
-import alarmRouter from "@route/alarm";
-import adminRouter from "@route/admin";
+import {
+  railRobotRouter,
+  accidentRouter,
+  alarmRouter,
+  adminRouter,
+  suRailRobotRouter,
+  suAccidentRouter,
+} from "@router/index";
 
 import { webSoketService, authService } from "@service/index";
-import { uri, PORT } from "@config/index";
+import { uri, PORT } from "@config/app-config";
 import {
   rateLimiter,
   corsOptions,
@@ -55,7 +57,7 @@ app.use(
   )
 );
 
-app.use(rateLimiter.makeLimit(1, 6000));
+app.use(rateLimiter.makeLimit(60, 3000));
 
 app.use(authService.checkAuthMiddleware);
 

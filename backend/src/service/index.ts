@@ -1,11 +1,11 @@
-import { SuRailRobotService } from "@core/service/su-railRobot";
-import { SuRailRobotServ } from "@service/su-railRobot";
+import { SuRailRobotService } from "@core/service/su-rail-robot";
+import { SuRailRobotServ } from "@service/su-rail-robot";
 
 import { SuAccidentService } from "@core/service/su-accident";
 import { SuAccidentServ } from "@service/su-accident";
 
-import { RailRobotService } from "@core/service/railRobot";
-import { RailRobotServ } from "@service/railRobot";
+import { RailRobotService } from "@core/service/rail-robot";
+import { RailRobotServ } from "@service/rail-robot";
 
 import { AccidentService } from "@core/service/accident";
 import { AccidentServ } from "@service/accident";

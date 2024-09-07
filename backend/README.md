@@ -89,7 +89,7 @@ Only permitted on WebSocket. Please enter your ID and password in the parenthese
 
 ## Rate Limiter
 
-If more than 6000 requests occur per minute, the rate limiter will be triggered.
+If more than 3000 requests occur per minute, the rate limiter will be triggered.
 
 #### Response: 429
 

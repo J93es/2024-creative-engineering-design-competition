@@ -1,5 +1,5 @@
-import { SuRailRobotService } from "@core/service/su-railRobot";
-import { RailRobotType } from "@model/railRobot";
+import { SuRailRobotService } from "@core/service/su-rail-robot";
+import { RailRobotType } from "@model/rail-robot";
 import { railRobotRepository } from "@repository/index";
 
 export class SuRailRobotServ implements SuRailRobotService {

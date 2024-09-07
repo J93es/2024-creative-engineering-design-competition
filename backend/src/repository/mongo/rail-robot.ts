@@ -1,12 +1,12 @@
-import RailRobot, { RailRobotType } from "@model/railRobot";
-import { RailRobotRepository } from "@core/repository/railRobot";
+import RailRobot, { RailRobotType } from "@model/rail-robot";
+import { RailRobotRepository } from "@core/repository/rail-robot";
 import { RailRobotSchema } from "@repository/mongo/schema/index";
 import { ResourceNotFoundError } from "@model/interface/error";
 
 export class RailRobotMongoRepo implements RailRobotRepository {
   async readAll(): Promise<RailRobotType[]> {
-    const accidentList = await RailRobotSchema.find().lean();
-    return accidentList.map((accident) => new RailRobot(accident));
+    const railRobotList = await RailRobotSchema.find().lean();
+    return railRobotList.map((railRobot) => new RailRobot(railRobot));
   }
 
   async read(id: string): Promise<RailRobotType> {

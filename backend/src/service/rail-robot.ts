@@ -1,18 +1,18 @@
-import { RailRobotService } from "@core/service/railRobot";
+import { RailRobotService } from "@core/service/rail-robot";
 import {
   RailRobotType,
   RailRobotCommand,
   MAX_LOCATION,
-} from "@model/railRobot";
+} from "@model/rail-robot";
 import { railRobotRepository } from "@repository/index";
 
 import { BadRequestError, ResourceNotFoundError } from "@model/interface/error";
 
-import { alarmRange } from "@config/index";
+import { alarmRange } from "@config/app-config";
 
 import { z } from "zod";
 
-import { safetyLenght } from "@config/index";
+import { safetyLenght } from "@config/app-config";
 
 export class RailRobotServ implements RailRobotService {
   private sortRailRobotsByCurrentLocation(

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { IdGenerator } from "@core/util/idGenerator";
+import { IdGenerator } from "@core/util/id-generator";
 
 let instance: UuidGenerator | null = null;
 export class UuidGenerator implements IdGenerator {

@@ -1,4 +1,4 @@
-import { authData } from "@config/index";
+import { authData } from "@config/app-config";
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "@core/service/auth";
 import { AuthError } from "@model/interface/error";

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { RailRobotType, RailRobotCommand } from "@model/railRobot";
+import { RailRobotType, RailRobotCommand } from "@model/rail-robot";
 
 const { Schema } = mongoose;
 

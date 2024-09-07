@@ -1,8 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { RailRobotType } from "@model/railRobot";
-import { RailRobotCommand } from "@model/railRobot";
-import { sendSuccessResponse, sendErrorResponse } from "@tools/response";
+import { RailRobotType, RailRobotCommand } from "@model/rail-robot";
 
 import {
   suAccidentService,
@@ -12,7 +10,7 @@ import {
   webSoketService,
 } from "@service/index";
 
-import { wrapAsyncController } from "@utils/index";
+import { wrapAsyncController, responseUtils } from "@utils/index";
 
 const router: Router = express.Router();
 
@@ -30,7 +28,7 @@ router.get(
         railRobots[railRobot.id] = railRobot;
       });
 
-      sendSuccessResponse(res, {
+      responseUtils.sendSuccess(res, {
         accident: accident,
         railRobots: railRobots,
       });
@@ -59,7 +57,7 @@ router.delete(
         currentLocation: 10,
         targetLocation: 15,
       });
-      sendSuccessResponse(res, { message: "Reseted successfully" });
+      responseUtils.sendSuccess(res, { message: "Reseted successfully" });
       webSoketService.broadcast();
       next();
     }

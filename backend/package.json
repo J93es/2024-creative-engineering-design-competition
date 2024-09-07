@@ -43,9 +43,8 @@
     "@core": "dist/src/core",
     "@model": "dist/src/model",
     "@repository": "dist/src/repository",
-    "@route": "dist/src/route",
+    "@router": "dist/src/router",
     "@service": "dist/src/service",
-    "@tools": "dist/src/tools",
     "@utils": "dist/src/utils"
   },
   "scripts": {

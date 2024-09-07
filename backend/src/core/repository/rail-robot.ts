@@ -1,4 +1,4 @@
-import { RailRobotType } from "@model/railRobot";
+import { RailRobotType } from "@model/rail-robot";
 
 export interface RailRobotRepository {
   readAll(): Promise<RailRobotType[]>;

@@ -34,12 +34,24 @@ function VmsInfo() {
         <h4 className="mb-4">VMS 정보</h4>
         <div>
           <p>VMS 연결 상태: {isVmsConnected ? "연결" : "연결 끊김"}</p>
-          {isVmsConnected && vmsStatus !== VmsStatus.IDLE ? (
-            <>
-              <p>VMS 송출 메시지</p>
-              <p>accident</p>
-              <p>{accident.location * SCALE}</p>
-            </>
+          {isVmsConnected ? (
+            vmsStatus === VmsStatus.IDLE ? (
+              <div className="card d-flex justify-content-center accident-info-cont m-2">
+                <div className="card-body">
+                  <h5>VMS 송출 메시지</h5>
+                  <p>Strictly limited</p>
+                  <p>70km/h</p>
+                </div>
+              </div>
+            ) : (
+              <div className="card d-flex justify-content-center accident-info-cont m-2 bg-danger-subtle">
+                <div className="card-body">
+                  <h5>VMS 송출 메시지</h5>
+                  <p>WARNING</p>
+                  <p>{accident.location * SCALE}m</p>
+                </div>
+              </div>
+            )
           ) : null}
         </div>
       </div>

@@ -6,10 +6,19 @@
 
 ### WEB
 
-- When in IDLE state, send 'I'.
+- When in Normal state, send 'I'.
 
 ```text
 I
+```
+
+### VMS
+
+- When in Normal state, print message.
+
+```text
+Strictly limited
+70km/h
 ```
 
 ## Accident
@@ -28,6 +37,6 @@ A
 - When in Accident state, print message.
 
 ```text
-accident
-1234
+WARNING
+1234m
 ```

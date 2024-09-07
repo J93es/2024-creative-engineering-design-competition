@@ -40,9 +40,7 @@ export class CustomLogger {
 
     return `${requestUtils.getId(req)} ${requestUtils.getIp(
       req
-    )} - - [${this.formatDateToCustomString(
-      new Date()
-    )}] "${head}" - ${message}`;
+    )} - - [${this.formatDateToCustomString(new Date())}] "${head}"|${message}`;
   };
 
   addLogMsg = (req: Request, logMsg: string) => {

@@ -1,10 +1,9 @@
 import { authData } from "@config/index";
 import { Request, Response, NextFunction } from "express";
-import { AuthType } from "@model/interface/auth";
 import { AuthService } from "@core/service/auth";
 import { AuthError } from "@model/interface/error";
 import url from "url";
-import { logger } from "@utils/index";
+import { customLogger } from "@utils/index";
 
 export class AuthServ implements AuthService {
   checkAuthentic = (req: Request, useQueryOption: boolean = false): void => {
@@ -32,7 +31,7 @@ export class AuthServ implements AuthService {
       });
 
       if (queryFoundAdmin) {
-        logger.log("ID", queryId, req);
+        customLogger.log("ID", queryId, req);
         return;
       }
     }
@@ -61,7 +60,7 @@ export class AuthServ implements AuthService {
     });
 
     if (headerFoundAdmin) {
-      logger.log("ID", headersId, req);
+      customLogger.log("ID", headersId, req);
       return;
     }
 

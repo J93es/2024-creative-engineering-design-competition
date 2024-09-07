@@ -3,7 +3,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { RailRobotType } from "@model/railRobot";
 import { accidentService, railRobotService } from "@service/index";
 import { authService } from "@service/index";
-import { logger } from "@utils/index";
+import { customLogger } from "@utils/index";
 
 // WebSocket 서버 설정
 const webSoketServer = new WebSocketServer({ noServer: true });
@@ -36,12 +36,12 @@ export class WebSocketServ {
         if (!authService.isAuthentic(req, true)) {
           ws.send("Unauthorized");
           ws.close();
-          logger.log("WebSocket", "unauthorized request", req);
+          customLogger.log("WebSocket", "unauthorized request", req);
           return;
         }
 
         clients.push(ws);
-        logger.log(
+        customLogger.log(
           "WebSocket",
           `connection established - ${clients.length} clients.`,
           req
@@ -54,7 +54,7 @@ export class WebSocketServ {
           if (index !== -1) {
             clients.splice(index, 1);
           }
-          logger.log(
+          customLogger.log(
             "WebSocket",
             `disconnected - ${clients.length} clients.`,
             req
@@ -103,7 +103,10 @@ export class WebSocketServ {
         }
       });
 
-      logger.log("WebSocket", `broadcasted data to ${clients.length} clients.`);
+      customLogger.log(
+        "WebSocket",
+        `broadcasted data to ${clients.length} clients.`
+      );
     } catch (error) {
       console.error(error);
     }

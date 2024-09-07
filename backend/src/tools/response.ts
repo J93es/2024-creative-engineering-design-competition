@@ -14,7 +14,6 @@ export function sendErrorResponse(
   err: any,
   statusCode: number = 404
 ) {
-  console.error(err);
   res.header("Content-Type", "application/json; charset=utf-8");
   res.status(statusCode).json({ msg: err.toString() });
 }

@@ -3,8 +3,9 @@ import { RateLimiter } from "@utils/rateLimiter";
 import { ErrorHandler } from "@utils/error-handler";
 import { corsOptions } from "@utils/cors";
 import { wrapAsyncController } from "@utils/wrapAsync";
-import { Logger } from "@utils/logger";
-import { RequestChecker } from "@utils/requestChecker";
+import { CustomLogger } from "@utils/customLogger";
+import { RequestUtils } from "@utils/requestUtils";
+import { NanoidGenerator } from "@utils/nanoid";
 
 export const idGenerator = new UuidGenerator();
 export const rateLimiter = new RateLimiter();
@@ -12,5 +13,6 @@ export const errorHandler = new ErrorHandler();
 export { corsOptions };
 export { wrapAsyncController };
 
-export const logger = new Logger();
-export const requestChecker = new RequestChecker();
+export const customLogger = new CustomLogger();
+export const requestUtils = new RequestUtils();
+export const nanoidGenerator = new NanoidGenerator();

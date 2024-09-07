@@ -18,12 +18,13 @@ import alarmRouter from "@route/alarm";
 import adminRouter from "@route/admin";
 
 import { webSoketService, authService } from "@service/index";
-import { uri, PORT, isProduction } from "@config/index";
+import { uri, PORT } from "@config/index";
 import {
   rateLimiter,
   corsOptions,
   errorHandler,
-  requestChecker,
+  requestUtils,
+  customLogger,
 } from "@utils/index";
 
 const app: Application = express();
@@ -38,13 +39,21 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(requestChecker.checkMiddleware);
+app.use(requestUtils.filterMiddleware);
 
-if (isProduction) {
-  app.use(logger("combined"));
-} else {
-  app.use(logger("dev"));
-}
+logger.token("request-id", (req: Request) => {
+  return requestUtils.getId(req) || "No custom message";
+});
+
+logger.token("log-msg", (req: Request) => {
+  return customLogger.getLogMsg(req) || "No custom message";
+});
+
+app.use(
+  logger(
+    ":request-id :remote-addr - :remote-user [:date[clf]] :method :url HTTP/:http-version :status :res[content-length] - :response-time ms :log-msg"
+  )
+);
 
 app.use(rateLimiter.makeLimit(1, 6000));
 

@@ -1,7 +1,7 @@
 import { rateLimit } from "express-rate-limit";
 import { sendErrorResponse } from "@tools/response";
 
-import { getIP } from "@tools/getIp";
+import { customLogger, requestUtils } from "@utils/index";
 
 export class RateLimiter {
   makeLimit(second: number, limit: number) {
@@ -11,11 +11,13 @@ export class RateLimiter {
       standardHeaders: "draft-7",
       // legacyHeaders: false,
       keyGenerator: (req) => {
-        return getIP(req);
+        return requestUtils.getIp(req);
       },
       handler: (req, res) => {
-        console.log(
-          `${req.ip} has exceeded the ${limit} requests in ${second} minutes limit`
+        customLogger.warn(
+          "RateLimiter",
+          `${req.ip} has exceeded the ${limit} requests in ${second} minutes limit`,
+          req
         );
         sendErrorResponse(
           res,

@@ -56,6 +56,7 @@ function AccidentControl() {
         onClick={async () => {
           try {
             await accidentFetchController.accidentIgnore(authData);
+            await vmsController.idle();
             setAlertData({
               message: "사고 무시에 성공했습니다.",
               type: "SUCCESS",

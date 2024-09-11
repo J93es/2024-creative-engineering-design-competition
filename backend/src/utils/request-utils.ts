@@ -11,6 +11,8 @@ export class RequestUtils {
     const ipData =
       req.headers["x-real-ip"] ||
       req.headers["x-forwarded-for"] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
       req.ip ||
       "unknown";
     return `${ipData}`;

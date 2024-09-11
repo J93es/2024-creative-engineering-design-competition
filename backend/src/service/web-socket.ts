@@ -2,7 +2,7 @@ import { Request } from "express";
 import { WebSocketServer, WebSocket } from "ws";
 import { RailRobotType } from "@model/rail-robot";
 import { accidentService, railRobotService, authService } from "@service/index";
-import { requestUtils } from "@utils/index";
+import { requestUtils, customLogger } from "@utils/index";
 
 // WebSocket 서버 설정
 const webSoketServer = new WebSocketServer({ noServer: true });
@@ -35,20 +35,16 @@ export class WebSocketServ {
         if (!authService.isAuthentic(req, true)) {
           ws.send("Unauthorized");
           ws.close();
-          console.log(
-            requestUtils.getId(req),
-            requestUtils.getIp(req),
-            '-- "WebSocket"',
-            "unauthorized request"
-          );
+          customLogger.log("WebSocket", "unauthorized request", req, true);
           return;
         }
 
         clients.push(ws);
-        console.log(
-          requestUtils.getIp(req),
-          '-- "WebSocket"',
-          `connection established - ${clients.length} clients.`
+        customLogger.log(
+          "WebSocket",
+          `connection established - ${clients.length} clients.`,
+          req,
+          true
         );
 
         ws.on("close", () => {
@@ -59,10 +55,11 @@ export class WebSocketServ {
             clients.splice(index, 1);
           }
 
-          console.log(
-            requestUtils.getIp(req),
-            '-- "WebSocket"',
-            `disconnected - ${clients.length} clients.`
+          customLogger.log(
+            "WebSocket",
+            `disconnected - ${clients.length} clients.`,
+            req,
+            true
           );
         });
 

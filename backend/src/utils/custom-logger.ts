@@ -64,9 +64,19 @@ export class CustomLogger {
     return `${req.headers.logMsg}` || "No custom message";
   };
 
-  log = (head: string, message: string, req?: Request) => {
+  log = (
+    head: string,
+    message: string,
+    req?: Request,
+    doNotUseBuffer?: boolean
+  ) => {
     if (!req) {
       console.log(this.makeSimpleMsg(head, message));
+      return;
+    }
+
+    if (doNotUseBuffer) {
+      console.log(this.makeMsg(head, message, req));
       return;
     }
     this.addLogMsg(req, this.makeSimpleMsg(head, message));

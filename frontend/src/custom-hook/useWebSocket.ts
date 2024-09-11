@@ -47,7 +47,6 @@ const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
       console.error("WebSocket 인증 정보가 없습니다.");
       return;
     }
-    console.log(cedcAuth.adminId, cedcAuth.password);
 
     const socket = new WebSocket(
       `${wsUrl}?cedc-auth=${cedcAuth.adminId}:${cedcAuth.password}`

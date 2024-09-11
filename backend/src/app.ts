@@ -1,4 +1,4 @@
-import "module-alias/register";
+// import "module-alias/register";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -67,7 +67,6 @@ app.use("/alarm", alarmRouter);
 app.use("/admin", adminRouter);
 app.use("/su-rail-robot", suRailRobotRouter);
 app.use("/su-accident", suAccidentRouter);
-app.use("ws-subscribe", webSoketService.subscribe);
 
 app.use(errorHandler.handleRouterNotFound);
 app.use(errorHandler.handleResourceNotFound);

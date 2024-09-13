@@ -57,7 +57,7 @@ app.use(
   )
 );
 
-app.use(rateLimiter.makeLimit(60, 3000));
+app.use(rateLimiter.makeLimit(60, 6000));
 
 app.use(authService.checkAuthMiddleware);
 

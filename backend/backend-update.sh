@@ -7,7 +7,7 @@ GIT_URI=https://github.com/J93es/2024-creative-engineering-design-competition.gi
 
 cd      ${WORK_DIR}                                                                 &&
 sudo    rm -rf  ${WORK_DIR}/_tmp                                                    &&
-sudo    git     clone ${GIT_URI} _tmp                                                  &&
+sudo    git     clone ${GIT_URI} _tmp                                               &&
 sudo    rm -rf  ${BUILD_DIR}/*                                                      &&
 sudo    cp -r   ${TMP_DIR}/*    ${BUILD_DIR}                                        &&
 sudo    cp      ${WORK_DIR}/env/backend ${BUILD_DIR}/.env                           &&

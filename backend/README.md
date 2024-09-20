@@ -1,3 +1,23 @@
+# Production
+
+## dot-env
+
+- Add .env file in ./ with the following values
+
+```./.env
+DB_URI="mongodb://localhost:27017/contest"
+PORT=8080
+CORS_WHITE_LIST=["example.com"]
+DEVELOPMENT_ENV="production"
+AUTH_DATA=[{"id":"id-example","password":"password-example"}]
+```
+
+## Script
+
+- npm run dev
+- npm run build
+- npm run start
+
 # API Documentation
 
 ## Enums

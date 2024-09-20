@@ -2,7 +2,7 @@
 export const uri = process.env.DB_URI || "mongodb://localhost:27017/contest";
 
 // 포트
-export const PORT = process.env.PORT || 8081;
+export const PORT = process.env.PORT || 8080;
 
 // cors 허용 url
 export const whitelist = JSON.parse(

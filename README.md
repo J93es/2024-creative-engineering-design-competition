@@ -6,12 +6,12 @@
 
 ![summation poster](./img/summation-poster.jpg)
 
-## Backend
+## Backend (./backend)
 
 ### Info
 
 - 레일로봇, 사고 정보를 관리하는 서버입니다.
-- "./backend/Readme.md"에 API 명세서를 작성하였습니다.
+- "./backend/Readme.md"에 배포 관련 정보 및 API 명세서를 첨부하였습니다.
 
 ### 기술스택
 
@@ -21,12 +21,12 @@
 - Infra: Nginx, AWS Route53
 - Test: k6
 
-## Frontend
+## Frontend (./frontend)
 
 ### Info
 
 - 레일로봇, 사고 정보를 관리하는 사고 관제 시스템 웹페이지 입니다.
-- "./frontend/Readme.md"에 VMS-Web 통신 규격 명세서를 작성하였습니다.
+- "./frontend/Readme.md"에 배포 관련 정보 및 VMS-Web 통신 규격 명세서를 첨부하였습니다.
 
 ### 기술스택
 

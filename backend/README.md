@@ -8,15 +8,19 @@
 DB_URI="mongodb://localhost:27017/contest"
 PORT=8080
 CORS_WHITE_LIST=["example.com"]
-DEVELOPMENT_ENV="production"
+DEVELOPMENT_ENV="development"
 AUTH_DATA=[{"id":"id-example","password":"password-example"}]
 ```
 
 ## Script
 
-- npm run dev
-- npm run build
-- npm run start
+### `npm run dev`
+
+- In a development environment, you must comment out the first line of ./src/app.ts: import "module-alias/register";
+
+### `npm run build`
+
+### `npm start`
 
 # API Documentation
 

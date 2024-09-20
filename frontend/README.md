@@ -5,6 +5,8 @@
 - Add .env file in ./ with the following values
 
 ```./.env
+# ./.env
+
 # backend api url
 REACT_APP_API_URL=http://localhost:8084
 

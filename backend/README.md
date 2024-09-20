@@ -5,6 +5,8 @@
 - Add .env file in ./ with the following values
 
 ```./.env
+# ./.env
+
 # database uri
 DB_URI="mongodb://localhost:27017/contest"
 

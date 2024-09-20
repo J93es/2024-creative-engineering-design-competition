@@ -5,10 +5,19 @@
 - Add .env file in ./ with the following values
 
 ```./.env
+# database uri
 DB_URI="mongodb://localhost:27017/contest"
+
+# exporting post
 PORT=8080
+
+# cors white list set
 CORS_WHITE_LIST=["example.com"]
+
+# development, production enviroment
 DEVELOPMENT_ENV="development"
+
+# admin id, password list
 AUTH_DATA=[{"id":"id-example","password":"password-example"}]
 ```
 

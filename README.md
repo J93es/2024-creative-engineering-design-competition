@@ -19,7 +19,7 @@
 - Framework: Express
 - DB: MongoDB
 - Language: TypeScript
-- Infra: Nginx, AWS Route53
+- Infra: Nginx, Cloudflare(or AWS Route53)
 - Test: k6
 
 ## Frontend (./frontend)
@@ -35,6 +35,6 @@
 - Framework: React
 - UserInterface: Bootstrap
 - Language: TypeScript
-- Infra: Nginx, AWS Route53
+- Infra: Nginx, Cloudflare(or AWS Route53)
 
 ![frontend page](./img/frontend-page.png)

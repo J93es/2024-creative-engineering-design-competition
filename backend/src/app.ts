@@ -1,13 +1,12 @@
 // In a development environment, comment out the next line.
-import "module-alias/register";
+// import "module-alias/register";
 
 import dotenv from "dotenv";
 dotenv.config();
 
 import logger from "morgan";
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request } from "express";
 import cookieParser from "cookie-parser";
-import path from "path";
 import cors from "cors";
 import mongoose from "mongoose";
 
@@ -33,14 +32,11 @@ import {
 const app: Application = express();
 app.set("trust proxy", "loopback, linklocal, uniquelocal");
 app.set("port", PORT || 8000);
-app.set("view engine", "ejs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
-
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use(requestUtils.filterMiddleware);
 

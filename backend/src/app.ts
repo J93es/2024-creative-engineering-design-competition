@@ -1,5 +1,5 @@
 // In a development environment, comment out the next line.
-// import "module-alias/register";
+import "module-alias/register";
 
 import dotenv from "dotenv";
 dotenv.config();

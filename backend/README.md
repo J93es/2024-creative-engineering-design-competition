@@ -80,6 +80,7 @@ export interface AccidentType {
   code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD; // Default: AccidentCode.CAR_CRASH
   location: number; // Required
   discoverorRobotId: string; // Required
+  probability?: number;
   status:
     | AccidentStatus.DETECTED
     | AccidentStatus.IGNORED
@@ -149,6 +150,7 @@ When data is changed, server emit data.
     "code": "0",
     "location": 3,
     "discoverorRobotId": "0",
+    "probability": 97,
     "status": "0"
   },
   "railRobots": {
@@ -399,8 +401,10 @@ Fetches the current accident.
 ```json
 {
   "id": "ac6e52f2-55ba-4bb3-9dd0-3018a5094bc3",
+  "code": "0",
   "location": 1,
   "discoverorRobotId": "1",
+  "probability": 97,
   "status": "0"
 }
 ```
@@ -414,7 +418,9 @@ Report a new accident record.
 ```json
 {
   "location": 1,
-  "discoverorRobotId": "1"
+  "code": "0",
+  "discoverorRobotId": "1",
+  "probability": 97
 }
 ```
 
@@ -426,7 +432,9 @@ Report a new accident record.
 {
   "id": "ac6e52f2-55ba-4bb3-9dd0-3018a5094bc3",
   "location": 1,
+  "code": "0",
   "discoverorRobotId": "1",
+  "probability": 97,
   "status": "0"
 }
 ```
@@ -541,6 +549,7 @@ Get all rail robots and current accident data.
     "code": "0",
     "location": 3,
     "discoverorRobotId": "0",
+    "probability": 97,
     "status": "0"
   },
   "railRobots": {

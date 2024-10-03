@@ -53,6 +53,10 @@ function AccidentInfo() {
         {isAccidentOccured ? (
           <div>
             <p>사고 종류: {decodeAccidentCode(accident.code)}</p>
+            <p>
+              사고 확률:{" "}
+              {accident.probability ? `${accident.probability}%` : "정보 없음"}
+            </p>
             <p>사고 위치: 터널 입구로 부터 {accident.location * SCALE}m 지점</p>
             <p>사고 상태: {decodeAccidentStatus(accident.status)}</p>
           </div>

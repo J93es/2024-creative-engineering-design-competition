@@ -13,6 +13,7 @@ export const accidentSchema = new Schema<AccidentType>({
   },
   location: { type: Number, required: true },
   discoverorRobotId: { type: String, required: true },
+  probability: { type: Number },
   status: {
     type: String,
     enum: [

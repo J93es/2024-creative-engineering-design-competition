@@ -79,7 +79,7 @@ export interface AccidentType {
   id: string; // Auto-generated on POST
   code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD; // Default: AccidentCode.CAR_CRASH
   location: number; // Required
-  discoverorRobotId: string; // Required
+  discovererRobotId: string; // Required
   probability?: number;
   status:
     | AccidentStatus.DETECTED
@@ -149,7 +149,7 @@ When data is changed, server emit data.
     "id": "147bdf05-a050-4f83-8f2a-0a68d36b537a",
     "code": "0",
     "location": 3,
-    "discoverorRobotId": "0",
+    "discovererRobotId": "0",
     "probability": 97,
     "status": "0"
   },
@@ -403,7 +403,7 @@ Fetches the current accident.
   "id": "ac6e52f2-55ba-4bb3-9dd0-3018a5094bc3",
   "code": "0",
   "location": 1,
-  "discoverorRobotId": "1",
+  "discovererRobotId": "1",
   "probability": 97,
   "status": "0"
 }
@@ -419,7 +419,7 @@ Report a new accident record.
 {
   "location": 1,
   "code": "0",
-  "discoverorRobotId": "1",
+  "discovererRobotId": "1",
   "probability": 97
 }
 ```
@@ -433,7 +433,7 @@ Report a new accident record.
   "id": "ac6e52f2-55ba-4bb3-9dd0-3018a5094bc3",
   "location": 1,
   "code": "0",
-  "discoverorRobotId": "1",
+  "discovererRobotId": "1",
   "probability": 97,
   "status": "0"
 }
@@ -548,7 +548,7 @@ Get all rail robots and current accident data.
     "id": "147bdf05-a050-4f83-8f2a-0a68d36b537a",
     "code": "0",
     "location": 3,
-    "discoverorRobotId": "0",
+    "discovererRobotId": "0",
     "probability": 97,
     "status": "0"
   },

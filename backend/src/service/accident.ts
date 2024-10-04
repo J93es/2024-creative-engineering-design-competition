@@ -36,19 +36,19 @@ export class AccidentServ implements AccidentService {
 
     const reportSchema = z.object({
       location: z.number(),
-      discoverorRobotId: z.string(),
+      discovererRobotId: z.string(),
     });
 
     const parseResult = reportSchema.safeParse(data);
     if (!parseResult.success) {
-      throw new BadRequestError("location, discoverorRobotId is invalid");
+      throw new BadRequestError("location, discovererRobotId is invalid");
     }
 
     const accidentId = idGenerator.generateId();
 
     const [accident, railRobot] = await Promise.all([
       accidentRepository.create({ ...data, id: accidentId }),
-      railRobotService.stop(data.discoverorRobotId),
+      railRobotService.stop(data.discovererRobotId),
     ]);
     return accident;
   }

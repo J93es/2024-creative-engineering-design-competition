@@ -12,7 +12,7 @@ export const accidentSchema = new Schema<AccidentType>({
     default: AccidentCode.CAR_CRASH,
   },
   location: { type: Number, required: true },
-  discoverorRobotId: { type: String, required: true },
+  discovererRobotId: { type: String, required: true },
   probability: { type: Number },
   status: {
     type: String,

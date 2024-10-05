@@ -5,6 +5,7 @@ export class AlarmFetchController {
   alarmStart = async (authData: LoginType): Promise<string> => {
     const response = await fetch(`${apiUrl}/alarm/start`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "cedc-auth": `${authData.adminId}:${authData.password}`,
@@ -20,6 +21,7 @@ export class AlarmFetchController {
   alarmEnd = async (authData: LoginType): Promise<string> => {
     const response = await fetch(`${apiUrl}/alarm/end`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "cedc-auth": `${authData.adminId}:${authData.password}`,

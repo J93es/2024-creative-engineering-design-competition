@@ -5,6 +5,7 @@ export class AdminFetchController {
   reset = async (authData: LoginType): Promise<string> => {
     const response = await fetch(`${apiUrl}/admin/reset`, {
       method: "DELETE",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "cedc-auth": `${authData.adminId}:${authData.password}`,

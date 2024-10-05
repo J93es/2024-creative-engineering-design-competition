@@ -5,6 +5,7 @@ export class RailRobotFetchController {
   patrolStart = async (authData: LoginType): Promise<string> => {
     const response = await fetch(`${apiUrl}/rail-robot/start-patrol`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "cedc-auth": `${authData.adminId}:${authData.password}`,
@@ -25,6 +26,7 @@ export class RailRobotFetchController {
       `${apiUrl}/rail-robot/move-to-target-location`,
       {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "cedc-auth": `${authData.adminId}:${authData.password}`,

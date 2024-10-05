@@ -7,6 +7,7 @@ export class AccidentFetchController {
     try {
       const response = await fetch(`${apiUrl}/accident`, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "cedc-auth": `${authData.adminId}:${authData.password}`,
@@ -26,6 +27,7 @@ export class AccidentFetchController {
   accidentIgnore = async (authData: LoginType): Promise<string> => {
     const response = await fetch(`${apiUrl}/accident/ignore`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "cedc-auth": `${authData.adminId}:${authData.password}`,

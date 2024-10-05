@@ -15,7 +15,7 @@ export interface AccidentType {
   id: string;
   code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD;
   location: number;
-  discoverorRobotId: string;
+  discovererRobotId: string;
   probability?: number;
   status:
     | AccidentStatus.DETECTED
@@ -28,7 +28,7 @@ export default class Accident implements AccidentType {
   id: string;
   code: AccidentCode.CAR_CRASH | AccidentCode.FIRE | AccidentCode.FLOOD;
   location: number;
-  discoverorRobotId: string;
+  discovererRobotId: string;
   probability?: number;
   status:
     | AccidentStatus.DETECTED
@@ -40,7 +40,7 @@ export default class Accident implements AccidentType {
     this.id = data.id;
     this.code = data.code;
     this.location = data.location;
-    this.discoverorRobotId = data.discoverorRobotId;
+    this.discovererRobotId = data.discovererRobotId;
     this.probability = data.probability;
     this.status = data.status;
   }
@@ -49,7 +49,7 @@ export default class Accident implements AccidentType {
 export const accidentInit = new Accident({
   id: "0",
   location: 0,
-  discoverorRobotId: "0",
+  discovererRobotId: "0",
   code: AccidentCode.CAR_CRASH,
   probability: 0,
   status: AccidentStatus.END,

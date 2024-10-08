@@ -9,8 +9,8 @@ export class RequestUtils {
 
   getIp = (req: Request) => {
     const ipData =
-      req.headers["x-real-ip"] ||
       req.headers["x-forwarded-for"] ||
+      req.headers["x-real-ip"] ||
       req.connection.remoteAddress ||
       req.socket.remoteAddress ||
       req.ip ||

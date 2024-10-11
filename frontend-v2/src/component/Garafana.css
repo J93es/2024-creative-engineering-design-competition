@@ -1,0 +1,70 @@
+.gf-card {
+  background-color: #292929;
+  border-radius: 6px;
+  margin: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.gf-h1 {
+  color: #f97316;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 24px;
+}
+
+.gf-h2 {
+  color: #f97316;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 20px;
+}
+
+.gf-highlight-bg-color {
+  background-color: #f97316 !important;
+}
+
+.gf-bg-color-1 {
+  background-color: #1f1f1f !important;
+}
+
+.gf-bg-color-2 {
+  background-color: #2d2d2d !important;
+}
+
+.gf-bg-color-3 {
+  background-color: #444444 !important;
+}
+
+.gf-bg-color-4 {
+  background-color: #5f5f5f !important;
+}
+
+.gf-border-color-1 {
+  border-color: #1f1f1f !important;
+}
+
+.gf-border-color-2 {
+  border-color: #292929 !important;
+}
+
+.gf-border-color-3 {
+  border-color: #444444 !important;
+}
+
+.gf-border-color-4 {
+  border-color: #5f5f5f !important;
+}
+
+.gf-text-color {
+  color: #a0a0a0 !important;
+}
+
+.gf-bs-btn {
+  --bs-btn-color: #ffffff !important;
+  --bs-btn-bg: #f97316 !important;
+  --bs-btn-border-color: #f97316 !important;
+  --bs-btn-hover-color: #ffffff !important;
+  --bs-btn-hover-bg: #ff4400 !important;
+  --bs-btn-hover-border-color: #ff4400 !important;
+}

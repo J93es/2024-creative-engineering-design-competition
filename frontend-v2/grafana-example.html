@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grafana Styled Dashboard</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Roboto", sans-serif;
+        background-color: #1f1f1f;
+        color: #e0e0e0;
+      }
+
+      header {
+        background-color: #2d2d2d;
+        color: #f97316; /* Orange accent */
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+      }
+
+      .card {
+        background-color: #292929;
+        border-radius: 6px;
+        width: 300px;
+        margin: 15px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .card h2 {
+        color: #f97316;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        color: #a0a0a0;
+        font-size: 16px;
+        margin: 0;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #f97316;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      .button:hover {
+        background-color: #ffa85d;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Grafana Styled Dashboard</header>
+
+    <div class="container">
+      <div class="card">
+        <h2>CPU Usage</h2>
+        <p>Current: 40%</p>
+        <p>Peak: 80%</p>
+        <a href="#" class="button">View Details</a>
+      </div>
+
+      <div class="card">
+        <h2>Memory Usage</h2>
+        <p>Current: 65%</p>
+        <p>Peak: 95%</p>
+        <a href="#" class="button">View Details</a>
+      </div>
+
+      <div class="card">
+        <h2>Disk I/O</h2>
+        <p>Current: 120 MB/s</p>
+        <p>Peak: 300 MB/s</p>
+        <a href="#" class="button">View Details</a>
+      </div>
+    </div>
+  </body>
+</html>

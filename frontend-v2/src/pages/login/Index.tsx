@@ -66,9 +66,11 @@ export default function Login({
                 autoComplete="on"
                 {...register("adminId")}
               />
-              <small className="form-text text-muted">
-                {errors.adminId?.message ?? ""}
-              </small>
+              <div className="form-text text-muted">
+                <small className="login-help-msg">
+                  {errors.adminId?.message ?? ""}
+                </small>
+              </div>
             </div>
 
             <div className="form-group">
@@ -80,9 +82,11 @@ export default function Login({
                 autoComplete="on"
                 {...register("password")}
               />
-              <small className="form-text text-muted">
-                {errors.password?.message ?? ""}
-              </small>
+              <div className="form-text text-muted">
+                <small className="login-help-msg">
+                  {errors.password?.message ?? ""}
+                </small>
+              </div>
             </div>
 
             <button type="submit" className="login-button">

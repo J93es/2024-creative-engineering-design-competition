@@ -38,32 +38,35 @@ function AccidentInfo() {
 
   let bgColor = "";
   if (accident.status === AccidentStatus.DETECTED) {
-    bgColor = "bg-warning-subtle";
+    bgColor = "gf-highlight-bg-color";
   }
   if (accident.status === AccidentStatus.ALARMING) {
-    bgColor = "bg-danger-subtle";
+    bgColor = "gf-danger-bg-color";
   }
 
   return (
-    <div
-      className={`card d-flex justify-content-center accident-info-cont mb-4 ${bgColor}`}
-    >
-      <div className="card-body">
-        <h4 className="mb-4">사고 정보</h4>
-        {isAccidentOccured ? (
-          <div>
-            <p>사고 종류: {decodeAccidentCode(accident.code)}</p>
-            <p>
-              사고 확률:{" "}
-              {accident.probability ? `${accident.probability}%` : "정보 없음"}
-            </p>
-            <p>사고 위치: 터널 입구로 부터 {accident.location * SCALE}m 지점</p>
-            <p>사고 상태: {decodeAccidentStatus(accident.status)}</p>
-          </div>
-        ) : (
-          <p>발생한 사고가 없습니다.</p>
-        )}
-      </div>
+    <div className={`d-flex justify-content-center mb-4`}>
+      {isAccidentOccured ? (
+        <div
+          className={`${bgColor}`}
+          style={{
+            width: "90%",
+            borderRadius: "0.5rem",
+            paddingTop: "1rem",
+            color: "white",
+          }}
+        >
+          <p>사고 종류: {decodeAccidentCode(accident.code)}</p>
+          <p>
+            사고 확률:{" "}
+            {accident.probability ? `${accident.probability}%` : "정보 없음"}
+          </p>
+          <p>사고 위치: 터널 입구로 부터 {accident.location * SCALE}m 지점</p>
+          <p>사고 상태: {decodeAccidentStatus(accident.status)}</p>
+        </div>
+      ) : (
+        <p>발생한 사고가 없습니다.</p>
+      )}
     </div>
   );
 }

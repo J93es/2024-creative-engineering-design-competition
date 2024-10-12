@@ -24,6 +24,10 @@
   background-color: #f97316 !important;
 }
 
+.gf-danger-bg-color {
+  background-color: #ff0000 !important;
+}
+
 .gf-bg-color-1 {
   background-color: #1f1f1f !important;
 }
@@ -59,12 +63,15 @@
 .gf-text-color {
   color: #a0a0a0 !important;
 }
+.gf-highlight-text-color {
+  color: #f97316 !important;
+}
 
 .gf-bs-btn {
   --bs-btn-color: #ffffff !important;
   --bs-btn-bg: #f97316 !important;
   --bs-btn-border-color: #f97316 !important;
   --bs-btn-hover-color: #ffffff !important;
-  --bs-btn-hover-bg: #ff4400 !important;
-  --bs-btn-hover-border-color: #ff4400 !important;
+  --bs-btn-hover-bg: #ff0000 !important;
+  --bs-btn-hover-border-color: #ff0000 !important;
 }

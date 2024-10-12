@@ -36,8 +36,9 @@ function RailRobotLocation() {
   };
 
   return (
-    <div className="d-inline-flex justify-content-center cur-robot-location-cont mb-4">
-      <div className="card-body">
+    <div className="d-inline-flex justify-content-center mb-4">
+      <div>
+        <p style={{ textAlign: "right" }}>단위: (m)</p>
         <div style={lineStyle}>
           {railRobotPositions.map((pos, index) => (
             <div key={index} style={getPositionStyle(pos)} />

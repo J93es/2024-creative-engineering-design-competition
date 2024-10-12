@@ -24,52 +24,50 @@ function RailRobotInfo() {
   };
 
   return (
-    <div className="d-flex justify-content-center  accident-info-cont mb-4">
-      <div className="card-body">
-        <table className="table">
-          <thead>
-            <tr>
-              <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                ID
-              </th>
-              <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                명령
-              </th>
-              <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                현재 위치
-              </th>
-              <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                순찰 지점
-              </th>
-              <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                이동할 위치
-              </th>
+    <div className="d-flex justify-content-center mb-4">
+      <table className="table">
+        <thead>
+          <tr>
+            <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
+              ID
+            </th>
+            <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
+              명령
+            </th>
+            <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
+              현재 위치
+            </th>
+            <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
+              순찰 지점
+            </th>
+            <th className="gf-text-color gf-bg-color-3 gf-border-color-4">
+              이동할 위치
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {railRobots.map((railRobot) => (
+            <tr key={railRobot.id}>
+              <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
+                {railRobot.id}
+              </td>
+              <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
+                {railRobotCommandDecoder(railRobot.command)}
+              </td>
+              <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
+                {railRobot.currentLocation * SCALE}m
+              </td>
+              <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
+                {(railRobot.patrolStartLocation ?? 0) * SCALE}m ~{" "}
+                {(railRobot.patrolEndLocation ?? 0) * SCALE}m
+              </td>
+              <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
+                {(railRobot.targetLocation ?? 0) * SCALE}m
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {railRobots.map((railRobot) => (
-              <tr key={railRobot.id}>
-                <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                  {railRobot.id}
-                </td>
-                <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                  {railRobotCommandDecoder(railRobot.command)}
-                </td>
-                <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                  {railRobot.currentLocation * SCALE}m
-                </td>
-                <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                  {(railRobot.patrolStartLocation ?? 0) * SCALE}m ~{" "}
-                  {(railRobot.patrolEndLocation ?? 0) * SCALE}m
-                </td>
-                <td className="gf-text-color gf-bg-color-3 gf-border-color-4">
-                  {(railRobot.targetLocation ?? 0) * SCALE}m
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

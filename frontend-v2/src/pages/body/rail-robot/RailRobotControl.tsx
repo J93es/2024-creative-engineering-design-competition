@@ -6,7 +6,7 @@ import { MAX_LOCATION, SCALE } from "config/app-config";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import "component/Garafana.css";
+import "component/grafana.css";
 
 export interface LocationType {
   location: number;
@@ -61,14 +61,14 @@ function RailRobotControl() {
   };
 
   return (
-    <div className="rail-robot-control-cont">
+    <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group input-group mb-3">
           <label htmlFor="location"></label>
           <input
             id="location"
             type="number"
-            className="form-control gf-bg-color-3 gf-text-color"
+            className="form-control gf-bg-color-4 gf-text-color"
             placeholder={errors.location?.message ?? "위치를 입력하세요."}
             aria-describedby="button-submit-location"
             {...register("location", {
@@ -86,7 +86,7 @@ function RailRobotControl() {
       </form>
       <button
         type="button"
-        className="btn btn-primary gf-bs-btn"
+        className="btn btn-primary gf-bs-btn m-2"
         onClick={async () => {
           try {
             await railRobotFetchController.patrolStart(authData);

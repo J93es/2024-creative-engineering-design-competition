@@ -1,16 +1,15 @@
 import { createContext, useState, useContext } from "react";
 import { AccidentType, accidentInit } from "module/accident";
+import { AlertType } from "module/alert";
 import { RailRobotType } from "module/railRobot";
-
-import Alert from "pages/body/Alert";
 
 import useWebSocket from "custom-hook/useWebSocket";
 
+import Alert from "pages/body/Alert";
 import Accident from "pages/body/accident/Index";
+import TunnelSystem from "pages/body/tunnel-system/Index";
 import RailRobot from "pages/body/rail-robot/Index";
-import AdminControl from "pages/body/admin/AdminControl";
 import Vms from "pages/body/vms/Index";
-import { AlertType } from "module/alert";
 
 import { CedcAuthContext } from "App";
 
@@ -34,23 +33,27 @@ function Body() {
   });
 
   return (
-    <SetAlertDataContext.Provider value={setAlertData}>
-      <AccidentContext.Provider value={accident}>
-        <RailRobotsContext.Provider value={railRobots}>
-          <Alert alertData={alertData} />
-          <div className="body-wrapper p-5 d-flex justify-content-center">
-            <div className="body-row" style={{ minWidth: "520px" }}>
-              <RailRobot />
+    <div className="d-flex justify-content-center">
+      <SetAlertDataContext.Provider value={setAlertData}>
+        <AccidentContext.Provider value={accident}>
+          <RailRobotsContext.Provider value={railRobots}>
+            <Alert alertData={alertData} />
+            <div className="row" style={{ width: "100%" }}>
+              <div className="col" style={{ minWidth: "500px" }}>
+                <Accident />
+                <TunnelSystem />
+              </div>
+              <div className="col">
+                <RailRobot />
+              </div>
+              <div className="col" style={{ minWidth: "500px" }}>
+                <Vms />
+              </div>
             </div>
-            <div className="body-row">
-              <Vms />
-              <Accident />
-              <AdminControl />
-            </div>
-          </div>
-        </RailRobotsContext.Provider>
-      </AccidentContext.Provider>
-    </SetAlertDataContext.Provider>
+          </RailRobotsContext.Provider>
+        </AccidentContext.Provider>
+      </SetAlertDataContext.Provider>
+    </div>
   );
 }
 

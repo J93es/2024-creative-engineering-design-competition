@@ -1,5 +1,6 @@
 import { AlertType } from "module/alert";
 import { useState, useEffect } from "react";
+import "component/grafana.css";
 
 function ShowAlert({ alertData }: { alertData: AlertType }) {
   const [show, setShow] = useState(false);
@@ -23,11 +24,11 @@ function ShowAlert({ alertData }: { alertData: AlertType }) {
 
   return show ? (
     <div
-      className={`alert alert-${alarmType} alert-dismissible border border-5`}
+      className={`alert alert-${alarmType} alert-dismissible`}
       role="alert"
       key={alertKey}
     >
-      <p>{alertData.message}</p>
+      <span className="gf-highlight-text-color">{alertData.message}</span>
       <button
         type="button"
         className="btn-close"

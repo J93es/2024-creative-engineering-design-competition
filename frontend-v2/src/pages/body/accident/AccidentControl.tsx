@@ -7,16 +7,17 @@ import {
 } from "controller/index";
 import { SetAlertDataContext } from "pages/body/Index";
 import { SCALE, serialDelay } from "config/app-config";
+import "component/grafana.css";
 
 function AccidentControl() {
   const setAlertData = useContext(SetAlertDataContext);
   const authData = useContext(CedcAuthContext);
 
   return (
-    <div className="btn-group" role="group" aria-label="alarm-control-cont">
+    <div className="btn-group m-2" role="group" aria-label="alarm-control-cont">
       <button
         type="button"
-        className="btn btn-outline-secondary"
+        className="btn btn-primary gf-bs-btn"
         onClick={async () => {
           try {
             await alarmFetchController.alarmStart(authData);
@@ -52,7 +53,7 @@ function AccidentControl() {
       </button>
       <button
         type="button"
-        className="btn btn-outline-secondary"
+        className="btn btn-primary gf-bs-btn"
         onClick={async () => {
           try {
             await accidentFetchController.accidentIgnore(authData);
@@ -73,7 +74,7 @@ function AccidentControl() {
       </button>
       <button
         type="button"
-        className="btn btn-outline-secondary"
+        className="btn btn-primary gf-bs-btn"
         onClick={async () => {
           try {
             await alarmFetchController.alarmEnd(authData);

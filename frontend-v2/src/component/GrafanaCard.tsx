@@ -1,6 +1,6 @@
-import "component/Garafana.css";
+import "component/grafana.css";
 
-export default function GrafanaCard({
+function GrafanaCard({
   title,
   childrenJsx,
 }: {
@@ -14,3 +14,5 @@ export default function GrafanaCard({
     </div>
   );
 }
+
+export default GrafanaCard;

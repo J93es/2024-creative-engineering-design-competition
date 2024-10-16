@@ -67,12 +67,12 @@ function AccidentInfo() {
                 <div
                   className="progress-bar gf-bg-color-4"
                   role="progressbar"
-                  style={{ width: `${accident.probability}%` }}
+                  style={{ width: `${accident.probability * 100}%` }}
                   aria-valuenow={accident.probability}
                   aria-valuemin={0}
                   aria-valuemax={100}
                 >
-                  {`${accident.probability}%`}
+                  {`${accident.probability * 100}%`}
                 </div>
               </div>
             ) : (

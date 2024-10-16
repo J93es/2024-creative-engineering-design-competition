@@ -34,7 +34,16 @@ function VmsTransmissionStatus() {
               style={{ fontSize: "100px" }}
               className="gf-highlight-text-color"
             >
-              O
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 100"
+                width="100"
+                height="100"
+                fill="green"
+              >
+                <rect x="40" y="10" width="20" height="40" fill="green" />
+                <polygon points="20,50 50,80 80,50" fill="green" />
+              </svg>
             </span>
           ) : (
             <span

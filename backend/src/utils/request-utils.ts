@@ -15,7 +15,7 @@ export class RequestUtils {
       req.socket.remoteAddress ||
       req.ip ||
       "unknown";
-    return `${ipData}`;
+    return `[${ipData}]`;
   };
 
   filterMiddleware(req: Request, res: Response, next: NextFunction) {

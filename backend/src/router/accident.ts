@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { wrapAsyncController, responseUtils } from "@utils/index";
+import { wrapAsyncController, responseUtils, rateLimiter } from "@utils/index";
 
 import {
   accidentService,
@@ -31,6 +31,19 @@ router.post(
   wrapAsyncController(
     async (req: Request, res: Response, next: NextFunction) => {
       const data = await accidentService.report(req.body);
+      responseUtils.sendSuccess(res, data);
+      webSoketService.broadcast();
+      next();
+    }
+  )
+);
+
+router.patch(
+  "/probability",
+  rateLimiter.makeLimit(1, 1),
+  wrapAsyncController(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const data = await accidentService.patchProbability(req.body);
       responseUtils.sendSuccess(res, data);
       webSoketService.broadcast();
       next();

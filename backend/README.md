@@ -480,6 +480,41 @@ Ignores the current accident.
 }
 ```
 
+### PATCH /accident/probability
+
+#### Request
+
+```json
+{
+  "probability": 97
+}
+```
+
+#### Response
+
+- Normal
+
+```json
+{
+  "id": "ac6e52f2-55ba-4bb3-9dd0-3018a5094bc3",
+  "location": 1,
+  "code": "0",
+  "discovererRobotId": "1",
+  "probability": 97,
+  "status": "0"
+}
+```
+
+- If more than 1 requests occur 1 second, the rate limiter will be triggered.
+
+#### Response: 429
+
+```json
+{
+  "msg": "Too many requests, please try again later."
+}
+```
+
 ## Alarm Router
 
 ### PUT /alarm/start

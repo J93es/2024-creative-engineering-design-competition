@@ -53,6 +53,42 @@ export class AccidentServ implements AccidentService {
     return accident;
   }
 
+  async patch(data: Partial<AccidentType>): Promise<AccidentType> {
+    const patchSchema = z.object({
+      id: z.string(),
+    });
+
+    const parseResult = patchSchema.safeParse(data);
+    if (!parseResult.success) {
+      throw new BadRequestError("id is invalid");
+    }
+
+    const accident = await accidentRepository.update(data);
+    return accident;
+  }
+
+  async patchProbability(data: Partial<AccidentType>): Promise<AccidentType> {
+    const patchSchema = z.object({
+      probability: z.number(),
+    });
+
+    const parseResult = patchSchema.safeParse(data);
+    if (!parseResult.success) {
+      throw new BadRequestError("probability is invalid");
+    }
+
+    const currentAccident = await this.get();
+
+    if (!currentAccident.id) {
+      throw new ResourceNotFoundError("No Accident data in the database");
+    }
+
+    return await accidentRepository.update({
+      ...currentAccident,
+      probability: data.probability,
+    });
+  }
+
   async ignore(): Promise<AccidentType> {
     const currentAccident = await this.get();
 

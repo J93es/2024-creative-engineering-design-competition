@@ -41,13 +41,13 @@ function Body() {
             <div className="row" style={{ width: "100%" }}>
               <div className="col" style={{ minWidth: "500px" }}>
                 <Accident />
-                <TunnelSystem />
               </div>
               <div className="col">
                 <RailRobot />
               </div>
               <div className="col" style={{ minWidth: "500px" }}>
                 <Vms />
+                <TunnelSystem />
               </div>
             </div>
           </div>

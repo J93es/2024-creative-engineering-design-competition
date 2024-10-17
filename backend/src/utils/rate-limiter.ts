@@ -9,10 +9,6 @@ export class RateLimiter {
       windowMs: second * 1000,
       limit: limit,
       standardHeaders: "draft-7",
-      // legacyHeaders: false,
-      keyGenerator: (req) => {
-        return requestUtils.getIp(req);
-      },
       handler: (req, res) => {
         customLogger.warn(
           "RateLimiter",

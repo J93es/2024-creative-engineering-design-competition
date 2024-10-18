@@ -1,8 +1,8 @@
 import { Request } from "express";
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocketServer, WebSocket, RawData } from "ws";
 import { RailRobotType } from "@model/rail-robot";
 import { accidentService, railRobotService, authService } from "@service/index";
-import { requestUtils, customLogger } from "@utils/index";
+import { customLogger } from "@utils/index";
 
 // WebSocket 서버 설정
 const webSoketServer = new WebSocketServer({ noServer: true });
@@ -61,6 +61,13 @@ export class WebSocketServ {
             req,
             true
           );
+        });
+
+        ws.on("message", (message: RawData) => {
+          const messageStr = message.toString();
+          if (messageStr === "ping") {
+            ws.send("pong");
+          }
         });
 
         const broadcastData = await this.getBroadcastData();

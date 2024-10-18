@@ -36,7 +36,6 @@ function AccidentProbability() {
         return [...prev, accident.probability * 100];
       });
     } else {
-      console.log("accident.id is not defined");
       setProbabilityData([]);
     }
   }, [accident]);

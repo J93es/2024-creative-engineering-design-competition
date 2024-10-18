@@ -38,6 +38,7 @@ const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
     railRobots: [],
   });
   const wsRef = useRef<WebSocket | null>(null);
+  const heartbeatTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (wsRef.current) {
@@ -60,17 +61,31 @@ const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
           return;
         }
         wsRef.current.send("ping");
-        setInterval(() => {
+
+        heartbeatTimerRef.current = setInterval(() => {
           if (!wsRef.current) {
             return;
           }
+          if (
+            wsRef.current.readyState === WebSocket.CLOSED ||
+            wsRef.current.readyState === WebSocket.CLOSING
+          ) {
+            if (heartbeatTimerRef.current) {
+              clearInterval(heartbeatTimerRef.current);
+            }
+            return;
+          }
           wsRef.current.send("ping");
-        }, 50000);
+        }, 30000);
         console.log("WebSocket 연결이 열렸습니다.");
       };
 
       wsRef.current.onmessage = (event: MessageEvent) => {
         console.log("메시지 수신:", event.data);
+
+        if (event.data === "pong") {
+          return;
+        }
 
         const parsing = () => {
           try {
@@ -85,9 +100,6 @@ const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
           console.error("WebSocket 데이터 파싱에 실패했습니다.");
           return;
         }
-        if (resData === "pong") {
-          return;
-        }
 
         const accident: AccidentType = (resData.accident as AccidentType) ?? {};
         const railRobots = sortRailRobotsById(
@@ -99,13 +111,19 @@ const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
       };
 
       wsRef.current.onclose = () => {
+        if (heartbeatTimerRef.current) {
+          clearInterval(heartbeatTimerRef.current);
+        }
         console.log("WebSocket 연결이 닫혔습니다. 다시 연결합니다.");
         setTimeout(function () {
           connect();
-        }, 1000);
+        }, 3000);
       };
 
       wsRef.current.onerror = (error) => {
+        if (heartbeatTimerRef.current) {
+          clearInterval(heartbeatTimerRef.current);
+        }
         console.error("WebSocket 오류:", error);
       };
     };

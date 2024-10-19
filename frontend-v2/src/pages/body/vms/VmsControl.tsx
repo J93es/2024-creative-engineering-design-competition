@@ -4,7 +4,7 @@ import { vmsController } from "controller/index";
 import { SetAlertDataContext } from "pages/body/Index";
 import { SCALE, serialDelay } from "config/app-config";
 
-import "component/grafana.css";
+import "asset/grafana.css";
 
 function VmsControl() {
   const setAlertData = useContext(SetAlertDataContext);

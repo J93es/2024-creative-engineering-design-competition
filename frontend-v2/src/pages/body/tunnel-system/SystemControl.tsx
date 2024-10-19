@@ -2,7 +2,7 @@ import { CedcAuthContext } from "App";
 import { useContext } from "react";
 import { adminFetchController } from "controller/index";
 import { SetAlertDataContext } from "pages/body/Index";
-import "component/grafana.css";
+import "asset/grafana.css";
 
 function SystemControl() {
   const setAlertData = useContext(SetAlertDataContext);

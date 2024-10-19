@@ -6,7 +6,7 @@ import { MAX_LOCATION, SCALE } from "config/app-config";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import "component/grafana.css";
+import "asset/grafana.css";
 
 export interface LocationType {
   location: number;

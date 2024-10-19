@@ -2,12 +2,14 @@ import { AccidentContext } from "pages/body/Index";
 import { useContext } from "react";
 import { AccidentCode, AccidentStatus } from "module/accident";
 import { SCALE } from "config/app-config";
-import "component/grafana.css";
+import "asset/grafana.css";
 
-function AccidentInfo() {
+function AccidentInfo({ probabilityData }: { probabilityData: number[] }) {
   const accident = useContext(AccidentContext);
 
   const isAccidentOccured = accident.id ? true : false;
+
+  const probability: number = probabilityData[probabilityData.length - 1];
 
   const decodeAccidentCode = (code: string) => {
     switch (code) {
@@ -72,12 +74,14 @@ function AccidentInfo() {
             <div
               className="progress-bar gf-bg-color-4"
               role="progressbar"
-              style={{ width: `${accident.probability * 100}%` }}
-              aria-valuenow={accident.probability}
+              style={{
+                width: `${probability}%`,
+              }}
+              aria-valuenow={probability}
               aria-valuemin={0}
               aria-valuemax={100}
             >
-              {`${accident.probability * 100}%`}
+              {`${probability}%`}
             </div>
           </div>
         ) : (

@@ -1,4 +1,4 @@
-import "component/grafana.css";
+import "asset/grafana.css";
 
 function GrafanaCard({
   title,

@@ -1,6 +1,6 @@
 import { AlertType } from "module/alert";
 import { useState, useEffect } from "react";
-import "component/grafana.css";
+import "asset/grafana.css";
 
 function ShowAlert({ alertData }: { alertData: AlertType }) {
   const [show, setShow] = useState(false);

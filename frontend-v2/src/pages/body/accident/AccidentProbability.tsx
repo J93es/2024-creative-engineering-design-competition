@@ -1,17 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AccidentContext } from "pages/body/Index";
 import { LinePath } from "@visx/shape";
-import { curveMonotoneX } from "@visx/curve";
 import { scaleLinear } from "@visx/scale";
 import { AxisLeft, AxisBottom } from "@visx/axis";
 import { Circle } from "@visx/shape";
 
-function AccidentProbability() {
+function AccidentProbability({
+  probabilityData,
+  setProbabilityData,
+}: {
+  probabilityData: number[];
+  setProbabilityData: React.Dispatch<React.SetStateAction<number[]>>;
+}) {
   const accident = useContext(AccidentContext);
-  const [probabilityData, setProbabilityData] = useState<number[]>([]);
   const width = 500;
   const height = 250;
   const margin = { top: 20, right: 40, bottom: 40, left: 40 };
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const xScale = scaleLinear({
     domain: [0, probabilityData.length - 1],
@@ -23,22 +28,54 @@ function AccidentProbability() {
     range: [height - margin.bottom, margin.top],
   });
 
+  const propabilityShowLength = 20;
+
+  useEffect(() => {
+    const func = () => {
+      if (accident.id) {
+        setProbabilityData((prev) => {
+          const newProbability: number = parseFloat(
+            (94 + Math.random() * 6).toFixed(2)
+          );
+
+          if (prev.length > propabilityShowLength) {
+            return [...prev.slice(1), newProbability];
+          }
+          return [...prev, newProbability];
+        });
+      } else {
+        setProbabilityData([]);
+      }
+
+      timerRef.current = setTimeout(func, Math.random() * 1250 + 250);
+    };
+
+    func();
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        setProbabilityData([]);
+      }
+    };
+    // eslint-disable-next-line
+  }, []);
+
   useEffect(() => {
     if (accident.id) {
       setProbabilityData((prev) => {
-        if (!accident.probability) {
-          return prev;
+        const accidentProbability: number = parseFloat(
+          (100 * (accident?.probability || 0.9)).toFixed(2)
+        );
+        if (prev.length > propabilityShowLength) {
+          return [...prev.slice(1), accidentProbability];
         }
-
-        if (prev.length > 5) {
-          return [...prev.slice(1), accident.probability * 100];
-        }
-        return [...prev, accident.probability * 100];
+        return [...prev, accidentProbability];
       });
     } else {
       setProbabilityData([]);
     }
-  }, [accident]);
+  }, [accident, setProbabilityData]);
 
   if (!accident.id) {
     return (
@@ -83,7 +120,6 @@ function AccidentProbability() {
           y={(d) => yScale(d)} // y 위치는 데이터 값에 따라 결정
           stroke="#f97316"
           strokeWidth={2}
-          curve={curveMonotoneX} // 선을 부드럽게 그리기 위한 곡선 옵션
         />
 
         {/* 각 데이터 포인트를 점으로 표시 */}

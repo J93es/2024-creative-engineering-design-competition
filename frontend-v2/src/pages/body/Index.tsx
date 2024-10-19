@@ -33,27 +33,29 @@ function Body() {
   });
 
   return (
-    <SetAlertDataContext.Provider value={setAlertData}>
-      <AccidentContext.Provider value={accident}>
-        <RailRobotsContext.Provider value={railRobots}>
-          <Alert alertData={alertData} />
-          <div className="d-flex justify-content-center">
-            <div className="row" style={{ width: "100%" }}>
-              <div className="col" style={{ minWidth: "500px" }}>
-                <Accident />
-              </div>
-              <div className="col">
-                <RailRobot />
-              </div>
-              <div className="col" style={{ minWidth: "500px" }}>
-                <Vms />
-                <TunnelSystem />
+    <div>
+      <SetAlertDataContext.Provider value={setAlertData}>
+        <AccidentContext.Provider value={accident}>
+          <RailRobotsContext.Provider value={railRobots}>
+            <Alert alertData={alertData} />
+            <div className="d-flex justify-content-center">
+              <div className="row" style={{ width: "100%" }}>
+                <div className="col" style={{ minWidth: "500px" }}>
+                  <Accident />
+                </div>
+                <div className="col">
+                  <RailRobot />
+                </div>
+                <div className="col" style={{ minWidth: "500px" }}>
+                  <Vms />
+                  <TunnelSystem />
+                </div>
               </div>
             </div>
-          </div>
-        </RailRobotsContext.Provider>
-      </AccidentContext.Provider>
-    </SetAlertDataContext.Provider>
+          </RailRobotsContext.Provider>
+        </AccidentContext.Provider>
+      </SetAlertDataContext.Provider>
+    </div>
   );
 }
 

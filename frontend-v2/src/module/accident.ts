@@ -47,7 +47,7 @@ export default class Accident implements AccidentType {
 }
 
 export const accidentInit = new Accident({
-  id: "0",
+  id: "-1",
   location: 0,
   discovererRobotId: "0",
   code: AccidentCode.CAR_CRASH,

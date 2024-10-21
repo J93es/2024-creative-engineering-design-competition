@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { AccidentType, accidentInit } from "module/accident";
+import { AccidentType } from "module/accident";
 import { AlertType } from "module/alert";
 import { RailRobotType } from "module/railRobot";
 
@@ -18,7 +18,7 @@ export const SetAlertDataContext = createContext<
 >(() => {});
 
 export const AccidentContext: React.Context<AccidentType> =
-  createContext<AccidentType>(accidentInit);
+  createContext<AccidentType>({} as AccidentType);
 export const RailRobotsContext: React.Context<RailRobotType[]> = createContext<
   RailRobotType[]
 >([]);

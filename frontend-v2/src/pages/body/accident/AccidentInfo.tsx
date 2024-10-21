@@ -4,10 +4,14 @@ import { AccidentCode, AccidentStatus } from "module/accident";
 import { SCALE } from "config/app-config";
 import "asset/grafana.css";
 
-function AccidentInfo({ probabilityData }: { probabilityData: number[] }) {
+function AccidentInfo({
+  probabilityData,
+  isAccidentOccured,
+}: {
+  probabilityData: number[];
+  isAccidentOccured: boolean;
+}) {
   const accident = useContext(AccidentContext);
-
-  const isAccidentOccured = accident.id ? true : false;
 
   const probability: number = probabilityData[probabilityData.length - 1];
 

@@ -150,7 +150,7 @@ When data is changed, server emit data.
     "code": "0",
     "location": 3,
     "discovererRobotId": "0",
-    "probability": 97,
+    "probability": 0.97,
     "status": "0"
   },
   "railRobots": {
@@ -404,7 +404,7 @@ Fetches the current accident.
   "code": "0",
   "location": 1,
   "discovererRobotId": "1",
-  "probability": 97,
+  "probability": 0.97,
   "status": "0"
 }
 ```
@@ -420,7 +420,7 @@ Report a new accident record.
   "location": 1,
   "code": "0",
   "discovererRobotId": "1",
-  "probability": 97
+  "probability": 0.97
 }
 ```
 
@@ -434,7 +434,7 @@ Report a new accident record.
   "location": 1,
   "code": "0",
   "discovererRobotId": "1",
-  "probability": 97,
+  "probability": 0.97,
   "status": "0"
 }
 ```
@@ -486,7 +486,7 @@ Ignores the current accident.
 
 ```json
 {
-  "probability": 97
+  "probability": 0.97
 }
 ```
 
@@ -500,7 +500,7 @@ Ignores the current accident.
   "location": 1,
   "code": "0",
   "discovererRobotId": "1",
-  "probability": 97,
+  "probability": 0.97,
   "status": "0"
 }
 ```
@@ -584,7 +584,7 @@ Get all rail robots and current accident data.
     "code": "0",
     "location": 3,
     "discovererRobotId": "0",
-    "probability": 97,
+    "probability": 0.97,
     "status": "0"
   },
   "railRobots": {

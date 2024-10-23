@@ -107,7 +107,18 @@ const useWebSocket = (cedcAuth: LoginType): UseWebSocketReturn => {
             (key) => resData.railRobots[key]
           )
         );
-        setData({ accident: accident, railRobots: railRobots });
+        setData((prev) => {
+          return {
+            accident:
+              JSON.stringify(prev.accident) === JSON.stringify(accident)
+                ? prev.accident
+                : accident,
+            railRobots:
+              JSON.stringify(prev.railRobots) === JSON.stringify(railRobots)
+                ? prev.railRobots
+                : railRobots,
+          };
+        });
       };
 
       wsRef.current.onclose = () => {

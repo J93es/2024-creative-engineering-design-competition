@@ -5,7 +5,7 @@
 ## Summary
 
 ![summation poster 1](./asset/summation-poster/summation-poster-school.jpg)
-![summation poster 2](./asset/summation-poster/summation-poster-national.jpg)
+![summation poster 2](./asset/summation-poster/summation-poster-national.jpeg)
 
 ## Backend (./backend)
 

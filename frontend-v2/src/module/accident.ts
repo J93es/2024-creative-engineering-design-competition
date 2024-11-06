@@ -46,11 +46,4 @@ export default class Accident implements AccidentType {
   }
 }
 
-export const accidentInit = new Accident({
-  id: "-1",
-  location: 0,
-  discovererRobotId: "0",
-  code: AccidentCode.CAR_CRASH,
-  probability: 0,
-  status: AccidentStatus.END,
-});
+export const accidentInit = new Accident({} as AccidentType);

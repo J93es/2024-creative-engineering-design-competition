@@ -82,6 +82,9 @@
 - 중앙일보
   https://v.daum.net/v/20241126112535152
 
+- 동아일보
+  https://www.donga.com/news/Economy/article/all/20241126/130509067/2
+
 - 한겨레
   https://www.hani.co.kr/arti/economy/biznews/1169091.html
 

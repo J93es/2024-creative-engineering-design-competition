@@ -79,7 +79,7 @@
 - 조선일보
   https://lifenlearning.chosun.com/pan/site/data/html_dir/2024/11/25/2024112501899.html
 
-- 다음 중앙일보
+- 중앙일보
   https://v.daum.net/v/20241126112535152
 
 - 한겨레

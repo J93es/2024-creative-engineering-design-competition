@@ -88,14 +88,23 @@
 - 한겨레
   https://www.hani.co.kr/arti/economy/biznews/1169091.html
 
-- 뉴스 원
-  https://www.news1.kr/society/education/5610757
-
 - 뉴데일리 경제
   https://biz.newdaily.co.kr/site/data/html/2024/11/25/2024112500342.html
+
+- 뉴스1
+  https://www.news1.kr/society/education/5610757
+
+- 뉴시스
+  https://www.newsis.com/view/NISX20241126_0002973337
+
+- 대학 저널
+  https://dhnews.co.kr/news/view/1065598961974404
 
 - 베리타스 알파
   https://www.veritas-a.com/news/articleView.html?idxno=531519
 
-- 대학 저널
-  https://dhnews.co.kr/news/view/1065598961974404
+- 서울신문
+  https://www.seoul.co.kr/news/society/education-news/2024/11/29/20241129500047
+
+- 이뉴스투데이
+  http://www.enewstoday.co.kr/news/articleView.html?idxno=2204586

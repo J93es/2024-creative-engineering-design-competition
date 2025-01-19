@@ -1,11 +1,17 @@
 # 2024-creative-engineering-design-competition
 
-2024년 창의공학설계 경진대회
+2024년 창의공학설계 경진대회의 웹 풀스택 소스코드 레포지터리입니다.
 
 ## Summary
 
 ![summation poster 1](./asset/summation-poster/summation-poster-school.jpg)
 ![summation poster 2](./asset/summation-poster/summation-poster-national.jpeg)
+
+## Member
+
+| 팀장/레일로봇 소프트웨어 | 레일로봇 하드웨어/터널 모형 | VMS/레일로봇 회로 | 웹 풀스택/인프라 |
+| ------------------------ | --------------------------- | ----------------- | ---------------- |
+| 김도협                   | 오정택/조경호               | 정형원            | 정민석           |
 
 ## Backend (./backend)
 

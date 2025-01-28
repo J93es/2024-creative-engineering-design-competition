@@ -1,7 +1,7 @@
 # Makefile for automating deployment of frontend and backend services
 
 # Variables
-REPO_URL=https://github.com/J93es/2024-creative-engineering-design-competition.git
+REPO_URL=https://github.com/j93es/2024-creative-engineering-design-competition.git
 PROJECT_DIR=/srv/2024-CEDC/2024-CEDC
 FRONTEND_DIR=$(PROJECT_DIR)/frontend
 FRONTEND_V2_DIR=$(PROJECT_DIR)/frontend-v2
